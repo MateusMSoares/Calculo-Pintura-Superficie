@@ -1,16 +1,27 @@
-.form-group {
+.form-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 colunas de tamanho igual */
+    gap: 10px; /* Espaçamento entre os elementos */
     margin-bottom: 20px;
 }
 
-.input-group {
+.form-row {
+    display: contents; /* Permite que os elementos sejam colocados diretamente no grid */
+}
+
+.form-column {
     display: flex;
-    align-items: center;
+    flex-direction: column; /* Alinha o label e o input verticalmente */
+    align-items: center; /* Centraliza os elementos horizontalmente */
 }
 
-.input-group label {
-    margin-right: 10px; /* Espaçamento entre o label e o campo de entrada */
+label {
+    margin-bottom: 5px; /* Espaçamento entre o label e o input */
 }
 
-.input-group select, .input-group input {
-    margin-right: 20px; /* Espaçamento entre o select e o próximo label */
+input, select {
+    width: 150px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
