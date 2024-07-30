@@ -39,7 +39,7 @@ const PaintTypeSelector = ({ paintType, setPaintType, openPaintManager, setPaint
                         );
                     })}
                 </select>
-                <button className="add-paint-button" onClick={openPaintManager}>+</button>
+                <button className="add-paint-button" onClick={openPaintManager} style={{ marginLeft: '10px' }}>+</button>
             </div>
         </div>
     );

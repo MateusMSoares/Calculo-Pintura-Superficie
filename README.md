@@ -13,6 +13,11 @@
    - Fórmula: `L * L`
    - Onde `L` é o comprimento do lado do quadrado.
 
+4. - **Retângulo:**
+   - Fórmula: `H * L`
+
+   * Fator de multiplicidade(Equipamento pode ter teto e fundo com mesmas dimensões)
+
 ## Tipo de Tinta
 
 - Várias opções disponíveis.
