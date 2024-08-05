@@ -39,7 +39,9 @@ const PaintTypeSelector = ({ paintType, setPaintType, openPaintManager, setPaint
                         );
                     })}
                 </select>
-                <button className="add-paint-button" onClick={openPaintManager} style={{ marginLeft: '10px' }}>+</button>
+                <button className="add-paint-button" onClick={openPaintManager} style={{ marginLeft: '10px', marginTop: '20px' }}>
+                  <i className="fa fa-cog" aria-hidden="true"></i> trocar pagina
+                </button>
             </div>
         </div>
     );

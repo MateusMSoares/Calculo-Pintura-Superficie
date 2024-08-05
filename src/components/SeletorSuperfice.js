@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/SeletorSuperfice.css';
+import CampoCone from './formas/CampoCone';
+import CampoCirculo from './formas/CampoCirculo';
+import CampoQuadrado from './formas/CampoQuadrado';
+import CampoRetangulo from './formas/CampoRetangulo';
 
-const SeletorSuperfice = ({ surfaceType, setSurfaceType, resetDimensions, multiplicidade, setMultiplicidade }) => {
+const SeletorSuperfice = ({ surfaceType, setSurfaceType, multiplicidade, setMultiplicidade }) => {
+    const [resultado, setResultado] = useState(0);
+    const calcularArea = (area) => {
+        setResultado(area * multiplicidade);
+    };
+    
     return (
         <div className="form-container">
             <div className="form-row">
@@ -16,10 +25,7 @@ const SeletorSuperfice = ({ surfaceType, setSurfaceType, resetDimensions, multip
                 <div className="form-column">
                     <select
                         value={surfaceType}
-                        onChange={(e) => {
-                            setSurfaceType(e.target.value);
-                            resetDimensions();
-                        }}
+                        onChange={(e) => setSurfaceType(e.target.value)}
                     >
                         <option value="">Selecione</option>
                         <option value="cone">Cone</option>
@@ -37,6 +43,12 @@ const SeletorSuperfice = ({ surfaceType, setSurfaceType, resetDimensions, multip
                     />
                 </div>
             </div>
+            {surfaceType === "cone" && <CampoCone calcularArea={calcularArea} />}
+                {surfaceType === "circulo" && <CampoCirculo calcularArea={calcularArea} />}
+                {surfaceType === "quadrado" && <CampoQuadrado calcularArea={calcularArea} />}
+                {surfaceType === "retangulo" && <CampoRetangulo calcularArea={calcularArea} />}
+            <label>Resultado da Área:</label>
+            <p>{resultado}</p>
         </div>
     );
 };

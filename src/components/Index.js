@@ -1,6 +1,5 @@
-// components/CalcularResultado.js
-
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import SeletorSuperfice from './SeletorSuperfice';
 import DimensionsInput from './InputDimensao';
 import PaintTypeSelector from './SeletorTinta';
@@ -18,6 +17,7 @@ const PaintCalculator = () => {
     const [area, setArea] = useState(null);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [multiplicidade, setMultiplicidade] = useState(1);
+    const navigate = useNavigate();
 
     const handleCalculate = () => {
         const { result, area } = calculatePaintCost(surfaceType, surfaceDimensions, paintTypes, paintType, multiplicidade);
@@ -26,6 +26,10 @@ const PaintCalculator = () => {
     };
 
     const resetDimensions = () => setSurfaceDimensions({ dimensao1: '', dimensao2: '' });
+
+    const handlePageChange = () => {
+        navigate('/configuracao'); 
+    };
 
     return (
         <div className="container">
@@ -60,6 +64,9 @@ const PaintCalculator = () => {
             <Modal isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)} contentLabel="Gerenciar Tintas">
                 <GerenciadorTinta paintTypes={paintTypes} setPaintTypes={setPaintTypes} closeModal={() => setModalIsOpen(false)} />
             </Modal>
+            <button onClick={handlePageChange} style={{ marginTop: '20px' }}>
+              Configuração
+            </button>
         </div>
     );
 };

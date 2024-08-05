@@ -1,0 +1,76 @@
+/* Estilo do container principal */
+.config-container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  height: 100vh;
+  width: 100vw;
+}
+
+.titulo {
+  text-align: center;
+  padding: 1rem;
+  background-color: #e0e0e0; /* Cinza claro */
+}
+
+.content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.titulo-opcoes {
+  align-self: center;
+  font-size: 1.2rem;
+  color: #ffffff; /* Branco */
+  margin-bottom: 1px;
+  cursor: pointer; /* Adiciona o cursor de ponteiro */
+}
+
+.opcoes {
+  width: 200px; /* Largura do menu */
+  background-color: #333333; /* Cinza escuro */
+  padding: 1rem;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* Aumenta a sombra para maior contraste */
+  display: flex;
+  flex-direction: column;
+}
+
+.opcoes button,
+.submenu button {
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  border: none;
+  background-color: #007bff; /* Azul */
+  color: #ffffff; /* Texto branco */
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.opcoes button:hover,
+.submenu button:hover {
+  background-color: #0056b3; /* Azul mais escuro */
+}
+
+.opcoes .btn-voltar {
+  background-color: #d9534f; /* Vermelho */
+  color: #ffffff; /* Texto branco */
+  margin-top: auto;
+}
+
+.opcoes .btn-voltar:hover {
+  background-color: #c9302c; /* Vermelho mais escuro */
+}
+
+.submenu {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.5rem; /* Adiciona um pequeno espaço acima do submenu */
+}
+
+.interacao {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  background-color: #ffffff; /* Branco */
+}
