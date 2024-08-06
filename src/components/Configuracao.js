@@ -31,9 +31,7 @@ const PaginaConfiguracao = () => {
 
   return (
     <div className="config-container">
-      <div className="titulo">
-        <h1>Configuração</h1>
-      </div>
+
       <div className="content">
         <div className="opcoes">
             <p className="titulo-opcoes" onClick={() => setShowGerenciamento(!showGerenciamento)}>
