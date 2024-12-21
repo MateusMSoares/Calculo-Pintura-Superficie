@@ -41,17 +41,6 @@ class Calculo:
         tanque.calcular_formulas()
         #tanque.calcular_propriedades("Cilindro")
         
-
-
-    def calcular_para_quadrado(self, tanque):
-        print(f"\n{tanque.nome} - Digite as informações para o Quadrado:")
-        lado = float(input("Lado: "))
-        altura = float(input("Altura: "))
-        variaveis = {'l': lado, 'altura': altura}
-        tanque.calcular_propriedades(variaveis, "Quadrado")
-        tanque.propriedades["lado"] = lado
-        tanque.propriedades["altura"] = altura
-
     def exibir_resultados(self):
         result = []
         for tanque in self.tanques:
