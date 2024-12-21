@@ -1,0 +1,66 @@
+{
+    "equipamentos": [
+        {
+            "nome": "{TIPO} {NUMERO_UNIDADE} {NUMERO_EQUIPAMENTO}",
+            "tipo": "Tanque",
+            "geometria": "Cilindro"
+        },
+        {
+            "nome": "{TIPO} {NUMERO_UNIDADE} {NUMERO_EQUIPAMENTO}",
+            "valor": 6.5
+        },
+        {
+            "nome": "Moto",
+            "valor": 3.5
+        }
+    ],
+    "geometrias": [
+        {   
+            "id": 1,
+            "nome": "Cilindro",
+            "diametro": 3.14,
+            "altura": 3.14,
+            "area": 3.14,
+            "volume": 3.14,
+            "area_fundo": 3.14,
+            "area_teto": 3.14,
+            "volume_isolamento": 3.14,
+            "formula_area": "((2 * 3.14) * d/2) * altura",
+            "formula_volume": "3.14 * (d/2)^2 * altura",
+            "formula_isolamento": "area_planificada_costado * altura_isolamento"
+        },
+        {
+            "id": 2,
+            "nome": "Quadrado",
+            "lado": 3.14,
+            "altura": 3.14,
+            "area": 3.14,
+            "volume": 3.14,
+            "formula_area": "l * l",
+            "formula_volume": "area * altura",
+            "volume_isolamento": 3.14,
+            "formula_isolamento": "area * altura_isolamento"
+        },
+        {
+            "id": 3,
+            "nome": "Retangulo",
+            "lado": 3.14,
+            "altura": 3.14,
+            "comprimento": 3.14,
+            "area": 3.14,
+            "volume": 3.14,
+            "formula_area": "comprimento * altura",
+            "formula_volume": "area * altura",
+            "volume_isolamento": 3.14,
+            "formula_isolamento": "area * altura_isolamento"
+        }
+    ],
+    "tipos": [
+        {
+            "nome": "Tanque",
+            "teto": "true",
+            "fundo": "true",
+            "isolamento": "true"
+        }
+    ]
+}
