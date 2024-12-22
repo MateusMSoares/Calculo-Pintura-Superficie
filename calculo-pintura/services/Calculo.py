@@ -21,7 +21,7 @@ class Calculo:
                 tanque = Tanque(
                     nome=equipamento["nome"],
                     tipo=equipamento["tipo"],
-                    geometria=equipamento["geometria"],
+                    geometrias=equipamento["geometria"],
                     formulas=equipamento["formulas"],
                     propriedades=equipamento["propriedades"]
                 )
@@ -38,19 +38,21 @@ class Calculo:
         print(f"\n{tanque.nome} - Digite as informações para o Cilindro:")
         tanque.propriedades["diametro"] = float(input("Diametro: "))
         tanque.propriedades["altura"] = float(input("Altura: "))
+        tanque.sobrepor_variaveis()
         tanque.calcular_formulas()
-        #tanque.calcular_propriedades("Cilindro")
         
     def exibir_resultados(self):
-        result = []
+        print("\n----------------------- Especificações -----------------------:")
         for tanque in self.tanques:
-            if tanque.geometria == "Cilindro":
-                tanque_info = {
-                    "nome": tanque.nome,
-                    "tipo": tanque.tipo,
-                    "geometria": tanque.geometria,
-                    "propriedades": tanque.propriedades
-                }
-                result.append(tanque_info)
-        print("\nResultados Calculados:")
-        print(json.dumps(result, indent=4))
+            # Exibindo as propriedades calculadas
+            for chave, valor in tanque.propriedades.items():
+                print(f"{chave}: {valor}")
+            # Exibindo as fórmulas calculadas
+            for chave, formula in tanque.formulas.items():
+                print(f"Fórmula para {chave}: {formula}")
+
+        print("\n----------------------- Fórmula Original -----------------------:")
+        for chave, formula in tanque.geometrias.formulas.items():
+            print(f"Fórmula para {chave}: {formula}")
+        
+            

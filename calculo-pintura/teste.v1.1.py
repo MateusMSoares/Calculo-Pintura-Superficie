@@ -4,8 +4,11 @@ from entitys.tipos.Tanque import Tanque      # Importação corrigida
 from services.Calculo import Calculo
 
 def main():
+
+    equipamentos = Equipamento().getAllEquipamentos()
+    print(equipamentos)
     
-    # Instanciando Calculo
+    """ # Instanciando Calculo
     calculo = Calculo("calculo.v1.2.json")
 
     # Exibindo o menu
@@ -24,7 +27,7 @@ def main():
     calculo.salvar_arquivo("calculo.v1.2.json")
     
     # Exibindo os resultados
-    calculo.exibir_resultados()
+    calculo.exibir_resultados() """
 
 if __name__ == "__main__":
     main()

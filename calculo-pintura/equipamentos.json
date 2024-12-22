@@ -1,0 +1,21 @@
+{
+  "equipamentos": [
+    {
+      "nome": "Tanque 001 T001",
+      "tipo": "Tanque",
+      "geometria_id": 1,
+      "propriedades": {
+        "diametro": 10.0,
+        "altura": 5.0,
+        "area": 157.0,
+        "volume": 392.5,
+        "area_fundo": 78.5,
+        "area_teto": 78.5,
+        "volume_isolamento": 785.0,
+        "fundo": true,
+        "isolamento": true
+      }
+    } 
+  ]
+}
+  

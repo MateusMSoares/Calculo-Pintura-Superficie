@@ -14,13 +14,6 @@
                 "volume_isolamento": 785.0,
                 "fundo": true,
                 "isolamento": true
-            },
-            "formulas": {
-                "area": "((2 * 3.14) * diametro / 2) * altura",
-                "volume": "3.14 * (diametro / 2)**2 * altura",
-                "volume_isolamento": "area * altura",
-                "area_fundo": "3.14 * (diametro / 2)**2",
-                "area_teto": "3.14 * (diametro / 2)**2"
             }
         }
     ],
@@ -40,7 +33,9 @@
             "formulas": {
                 "area": "((2 * 3.14) * diametro / 2) * altura",
                 "volume": "3.14 * (diametro / 2)**2 * altura",
-                "volume_isolamento": "area * altura"
+                "volume_isolamento": "area * altura",
+                "area_fundo": "3.14 * (diametro / 2)**2",
+                "area_teto": "3.14 * (diametro / 2)**2"
             }
         },
         {

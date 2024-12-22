@@ -1,0 +1,58 @@
+{
+    "geometrias": [
+      {
+        "id": 1,
+        "nome": "Cilindro",
+        "propriedades": {
+          "diametro": 3.14,
+          "altura": 3.14,
+          "area": 3.14,
+          "volume": 3.14,
+          "area_fundo": 3.14,
+          "area_teto": 3.14,
+          "volume_isolamento": 3.14
+        },
+        "formulas": {
+          "area": "((2 * 3.14) * diametro / 2) * altura",
+          "volume": "3.14 * (diametro / 2)**2 * altura",
+          "volume_isolamento": "area * altura",
+          "area_fundo": "3.14 * (diametro / 2)**2",
+          "area_teto": "3.14 * (diametro / 2)**2"
+        }
+      },
+      {
+        "id": 2,
+        "nome": "Quadrado",
+        "propriedades": {
+          "lado": 3.14,
+          "altura": 3.14,
+          "area": 3.14,
+          "volume": 3.14,
+          "volume_isolamento": 3.14
+        },
+        "formulas": {
+          "area": "l * l",
+          "volume": "area * altura",
+          "volume_isolamento": "area * altura_isolamento"
+        }
+      },
+      {
+        "id": 3,
+        "nome": "Retangulo",
+        "propriedades": {
+          "lado": 3.14,
+          "altura": 3.14,
+          "comprimento": 3.14,
+          "area": 3.14,
+          "volume": 3.14,
+          "volume_isolamento": 3.14
+        },
+        "formulas": {
+          "area": "comprimento * altura",
+          "volume": "area * altura",
+          "volume_isolamento": "area * altura_isolamento"
+        }
+      }
+    ]
+  }
+  

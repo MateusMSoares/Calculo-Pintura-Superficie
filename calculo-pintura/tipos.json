@@ -1,0 +1,14 @@
+{
+    "tipos": [
+        {
+            "id": 1,
+            "nome": "Tanque",
+            "propriedades": {
+            "teto": true,
+            "fundo": true,
+            "isolamento": true
+            }
+        }
+    ]
+}
+  
