@@ -14,9 +14,10 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Equipamento {
+    private int id;
     private String nome;
     private Tipo tipo;
     private Geometria geometria;
-    private Map<String, Double> propriedades;
+    private Map<String, Object> propriedades;
     
 }

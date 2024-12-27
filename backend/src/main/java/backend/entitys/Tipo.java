@@ -14,7 +14,8 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Tipo {
+    private int id;
     private String nome;
-    private Map<String, Boolean> propriedades;
+    private Map<String, Object> propriedades;
 
 }

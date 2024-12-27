@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "nome": "Tanque",
+        "propriedades": {
+            "teto": true,
+            "fundo": true,
+            "isolamento": true
+        }
+    },
+    {
+        "id": 2,
+        "nome": "Tubulação",
+        "propriedades": {
+            "tubo": true
+        }
+    },
+    {
+        "id": 3,
+        "nome": "Válvula",
+        "propriedades": {
+            "abertura": true
+        }
+    },
+    {
+        "id": 4,
+        "nome": "Bomba",
+        "propriedades": {
+            "bomba": true
+        }
+    }
+]

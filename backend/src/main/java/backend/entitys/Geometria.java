@@ -16,7 +16,7 @@ import lombok.ToString;
 public class Geometria {
     private int id;
     private String nome;
-    private Map<String, Double> propriedades;
+    private Map<String, Object> propriedades;
     private Map<String, String> formulas;
 
 }
