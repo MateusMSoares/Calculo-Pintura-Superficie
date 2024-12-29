@@ -1,3 +1,37 @@
 [
-   
+    {
+        "id": 1,
+        "nome": "Tanque 001",
+        "tipo": {
+            "id": 1,
+            "nome": "Tanque",
+            "propriedades": {
+                "teto": true,
+                "fundo": true,
+                "isolamento": true
+            }
+        },
+        "geometria": {
+            "id": 1,
+            "nome": "Cilindro",
+            "propriedades": {
+                "diametro": 3.14,
+                "altura": 3.14,
+                "area": 3.14,
+                "volume": 3.14,
+                "area_fundo": 3.14,
+                "area_teto": 3.14,
+                "volume_isolamento": 3.14
+            },
+            "formulas": {
+                "area": "((2 * 3.14) * diametro / 2) * altura",
+                "volume": "3.14 * (diametro / 2)**2 * altura",
+                "volume_isolamento": "area * altura",
+                "area_fundo": "3.14 * (diametro / 2)**2",
+                "area_teto": "3.14 * (diametro / 2)**2"
+            }
+        },
+        "propriedades": {
+        }
+    }
 ]
