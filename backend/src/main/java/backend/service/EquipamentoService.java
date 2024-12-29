@@ -10,9 +10,11 @@ import org.springframework.stereotype.Service;
 
 import backend.dto.NewEquipamentDto;
 import backend.entitys.Equipamento;
+import lombok.Getter;
 
 
 @Service
+@Getter
 public class EquipamentoService {
     private JsonReader jsonReader;
     @Autowired
@@ -44,8 +46,6 @@ public class EquipamentoService {
         equipamento.setTipo(tipoService.carregarTipoPorId(newEquipamento.getTipoId()));
         equipamento.setGeometria(geometriaService.carregarGeometriaPorId(newEquipamento.getGeometriaId()));
         equipamento.setPropriedades(this.setPropriedades(equipamento));
-        System.out.println("Equipamento: " + equipamento.getPropriedades());
-        jsonReader.salvarEquipamento(equipamento);
 
         return equipamento;
     }

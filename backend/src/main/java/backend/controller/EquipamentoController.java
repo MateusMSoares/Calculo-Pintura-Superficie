@@ -49,7 +49,8 @@ public class EquipamentoController {
     @PostMapping("/")
     public ResponseEntity<Equipamento> adicionarEquipamento(@RequestBody NewEquipamentDto newEquipamentDto) throws IOException{
         Equipamento equipamento = equipamentoService.criarEquipamento(newEquipamentDto);
-        System.out.println("Equipamento: " + equipamento);
+        System.out.println("Equipamento: " + equipamento.getPropriedades());
+        equipamentoService.getJsonReader().salvarEquipamento(equipamento);
    
         return ResponseEntity.ok(equipamento); 
     }
