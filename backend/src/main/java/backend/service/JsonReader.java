@@ -77,18 +77,25 @@ public class JsonReader {
 
     public void salvarEquipamento(Equipamento equipamento) throws IOException {
         List<Equipamento> equipamentos = carregarEquipamentos();
-        
+
         equipamentos.add(equipamento);
-        File equipamentosFile;
-        try {
-            equipamentosFile = new File(getClass().getClassLoader().getResource(EQUIPAMENTOS_FILE_PATH).toURI());
+
+        String caminhoArquivo = "backend/src/main/resources/banco/equipamentos.json"; 
+        File equipamentosFile = new File(caminhoArquivo);
+
+        try {        
+            if (!equipamentosFile.exists()) {
+                equipamentosFile.createNewFile();
+            }
+
+            ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(equipamentosFile, equipamentos);
+
+            System.out.println("Equipamento salvo com sucesso em: " + equipamentosFile.getAbsolutePath());
         } catch (Exception e) {
             e.printStackTrace();
-            equipamentosFile = null;
-        }        
-        
-        objectMapper.writerWithDefaultPrettyPrinter().writeValue(equipamentosFile, equipamentos);
+            System.out.println("Erro ao salvar o equipamento.");
+        }
     }
     
     
