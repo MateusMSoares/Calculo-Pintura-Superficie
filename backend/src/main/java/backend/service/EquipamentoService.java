@@ -43,6 +43,7 @@ public class EquipamentoService {
     
     public Equipamento criarEquipamento(NewEquipamentDto newEquipamento) throws IOException {
         Equipamento equipamento = new Equipamento();
+        equipamento.setNome(newEquipamento.getNome());
         equipamento.setTipo(tipoService.carregarTipoPorId(newEquipamento.getTipoId()));
         equipamento.setGeometria(geometriaService.carregarGeometriaPorId(newEquipamento.getGeometriaId()));
         equipamento.setPropriedades(this.setPropriedades(equipamento));
