@@ -3,13 +3,13 @@
         "id": 1,
         "nome": "Cilindro",
         "propriedades": {
-            "diametro": 3.14,
-            "altura": 3.14,
-            "area": 3.14,
-            "volume": 3.14,
-            "area_fundo": 3.14,
-            "area_teto": 3.14,
-            "volume_isolamento": 3.14
+            "diametro": 0.00,
+            "altura": 0.00,
+            "area": 0.00,
+            "volume": 0.00,
+            "area_fundo": 0.00,
+            "area_teto": 0.00,
+            "volume_isolamento": 0.00
         },
         "formulas": {
             "area": "((2 * 3.14) * diametro / 2) * altura",
@@ -23,13 +23,13 @@
         "id": 2,
         "nome": "Quadrado",
         "propriedades": {
-            "lado": 3.14,
-            "altura": 3.14,
-            "area": 3.14,
-            "volume": 3.14,
-            "volume_isolamento": 3.14,
-            "area_fundo": 3.14,
-            "area_teto": 3.14
+            "lado": 0.00,
+            "altura": 0.00,
+            "area": 0.00,
+            "volume": 0.00,
+            "volume_isolamento": 0.00,
+            "area_fundo": 0.00,
+            "area_teto": 0.00
         },
         "formulas": {
             "area": "l * l",

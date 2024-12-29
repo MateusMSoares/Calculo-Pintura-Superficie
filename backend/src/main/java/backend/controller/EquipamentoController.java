@@ -12,7 +12,11 @@ import backend.dto.NewEquipamentDto;
 import backend.entitys.Equipamento;
 import backend.service.EquipamentoService;
 
+import java.io.IOException;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.couchbase.CouchbaseProperties.Io;
 import org.springframework.http.ResponseEntity;
 
 @RestController
@@ -24,15 +28,19 @@ public class EquipamentoController {
     EquipamentoService equipamentoService = new EquipamentoService();
 
     @GetMapping("/")
-    public ResponseEntity<Equipamento> listarEquipamentos() {
-   
-        return ResponseEntity.ok(null); 
+    public ResponseEntity<List<Equipamento>> listarEquipamentos() {
+        try {
+            List<Equipamento> equipamentos = equipamentoService.listarEquipamentos();
+            return ResponseEntity.ok(equipamentos);
+        } catch (Exception e) {
+            return ResponseEntity.status(404).body(null);
+        }   
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Equipamento> listarEquipamento(@PathVariable int id) {
+    public ResponseEntity<Equipamento> procuraPorId(@PathVariable int id) {
         try {
-            Equipamento equipamento = equipamentoService.montarEquipamento(id);
+            Equipamento equipamento = equipamentoService.procuraPorId(id);
             return ResponseEntity.ok(equipamento);
         } catch (Exception e) {
             return ResponseEntity.status(404).body(null);
@@ -40,10 +48,11 @@ public class EquipamentoController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<NewEquipamentDto> adicionarEquipamento(@RequestBody NewEquipamentDto newEquipamentDto) {
-        System.out.println(newEquipamentDto);
+    public ResponseEntity<Equipamento> adicionarEquipamento(@RequestBody NewEquipamentDto newEquipamentDto) throws IOException{
+        Equipamento equipamento = equipamentoService.criarEquipamento(newEquipamentDto);
+        System.out.println("Equipamento: " + equipamento);
    
-        return ResponseEntity.ok(newEquipamentDto); 
+        return ResponseEntity.ok(equipamento); 
     }
 
 }

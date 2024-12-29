@@ -1,7 +1,7 @@
 [
     {
         "id": 1,
-        "nome": "Tanque 001 T001",
+        "nome": "Tanque 001",
         "tipo": {
             "id": 1,
             "nome": "Tanque",
@@ -30,9 +30,6 @@
                 "area_fundo": "3.14 * (diametro / 2)**2",
                 "area_teto": "3.14 * (diametro / 2)**2"
             }
-        },
-        "propriedades": {
-        
         }
     }
 ]
