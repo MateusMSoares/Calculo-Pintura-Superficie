@@ -77,11 +77,19 @@ public class JsonReader {
 
     public void salvarEquipamento(Equipamento equipamento) throws IOException {
         List<Equipamento> equipamentos = carregarEquipamentos();
-
+        
         equipamentos.add(equipamento);
-
-        objectMapper.writeValue(new File(EQUIPAMENTOS_FILE_PATH), equipamentos);
-
+        File equipamentosFile;
+        try {
+            equipamentosFile = new File(getClass().getClassLoader().getResource(EQUIPAMENTOS_FILE_PATH).toURI());
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(equipamentosFile, equipamentos);
+        } catch (Exception e) {
+            e.printStackTrace();
+            equipamentosFile = null;
+        }        
+        
+        objectMapper.writerWithDefaultPrettyPrinter().writeValue(equipamentosFile, equipamentos);
     }
+    
     
 }
