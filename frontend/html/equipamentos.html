@@ -51,15 +51,11 @@
           <div v-if="equipamento.expandido">
             <p><strong>Propriedades:</strong></p>
             <ul>
-                <li v-for="(valor, chave) in equipamento.geometria.propriedades" :key="chave">
+                <li v-for="(valor, chave) in equipamento.propriedades" :key="chave">
                     <strong>{{ chave }}:</strong> {{ valor }}
                 </li>
             </ul>
-            <ul>
-              <li v-for="(valor, chave) in equipamento.tipo.propriedades" :key="chave">
-                  <strong>{{ chave }}:</strong> {{ valor }}
-              </li>
-          </ul>
+        
         </div>
       </div>
     </div>
