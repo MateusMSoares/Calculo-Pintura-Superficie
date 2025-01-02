@@ -5,8 +5,7 @@ const app = Vue.createApp({
         ]
       };
     },
-    created() {
-      // Descomente a linha abaixo se quiser carregar da API
+    mounted() {
       this.carregarEquipamentos();
     },
     methods: {
@@ -14,7 +13,7 @@ const app = Vue.createApp({
         try {
           // Aqui você faz a requisição para carregar os equipamentos da API
           const response = await axios.get('http://localhost:8080/equipamento/');
-          
+          console.log(response.data);
           // Caso a API retorne os dados, atualiza a lista de equipamentos
           this.equipamentos = response.data.map(equipamento => ({
             ...equipamento,

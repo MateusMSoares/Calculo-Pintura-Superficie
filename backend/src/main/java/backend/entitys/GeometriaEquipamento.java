@@ -1,6 +1,5 @@
 package backend.entitys;
 
-import java.util.List;
 import java.util.Map;
 
 import lombok.AllArgsConstructor;
@@ -14,11 +13,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Geometria {
-    private int id;
-    private String nome;
-    private List<String> propriedades_fundamentais;
+public class GeometriaEquipamento {
     private Map<String, Object> propriedades;
     private Map<String, String> formulas;
-
 }

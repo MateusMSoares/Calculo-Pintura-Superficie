@@ -30,6 +30,7 @@ public class EquipamentoController {
     public ResponseEntity<List<Equipamento>> listarEquipamentos() {
         try {
             List<Equipamento> equipamentos = equipamentoService.listarEquipamentos();
+            System.out.println("Equipamentos: " + equipamentos);
             return ResponseEntity.ok(equipamentos);
         } catch (Exception e) {
             return ResponseEntity.status(404).body(null);
@@ -52,7 +53,7 @@ public class EquipamentoController {
         System.out.println("Equipamento: " + equipamento.getPropriedades());
         equipamentoService.getJsonReader().salvarEquipamento(equipamento);
    
-        return ResponseEntity.ok(equipamento); 
+        return ResponseEntity.ok(equipamento);
     }
 
 }

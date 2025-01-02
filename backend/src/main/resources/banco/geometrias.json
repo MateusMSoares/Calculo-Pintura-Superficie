@@ -2,6 +2,7 @@
     {
         "id": 1,
         "nome": "Cilindro",
+        "propriedades_fundamentais": ["diametro", "altura"],
         "propriedades": {
             "diametro": 0.00,
             "altura": 0.00,
@@ -22,6 +23,7 @@
     {
         "id": 2,
         "nome": "Quadrado",
+        "propriedades_fundamentais": ["lado", "altura"],
         "propriedades": {
             "lado": 0.00,
             "altura": 0.00,

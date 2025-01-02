@@ -16,8 +16,8 @@ import lombok.ToString;
 public class Equipamento {
     private int id;
     private String nome;
-    private Tipo tipo;
-    private Geometria geometria;
+    private int tipo;
+    private int geometria;
     private Map<String, Object> propriedades;
     
 }

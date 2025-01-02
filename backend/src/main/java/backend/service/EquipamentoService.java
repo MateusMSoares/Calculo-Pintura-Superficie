@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import backend.dto.NewEquipamentDto;
 import backend.entitys.Equipamento;
+import backend.entitys.Geometria;
+import backend.entitys.Tipo;
 import lombok.Getter;
 
 
@@ -44,23 +46,42 @@ public class EquipamentoService {
     public Equipamento criarEquipamento(NewEquipamentDto newEquipamento) throws IOException {
         Equipamento equipamento = new Equipamento();
         equipamento.setNome(newEquipamento.getNome());
-        equipamento.setTipo(tipoService.carregarTipoPorId(newEquipamento.getTipoId()));
-        equipamento.setGeometria(geometriaService.carregarGeometriaPorId(newEquipamento.getGeometriaId()));
-        equipamento.setPropriedades(this.setPropriedades(equipamento));
-
+        equipamento.setTipo(newEquipamento.getTipoId());
+        equipamento.setGeometria(newEquipamento.getGeometriaId());
+        // Passando o Map de propriedades_fundamentais para o método setPropriedades
+        equipamento.setPropriedades(this.setPropriedades(equipamento, newEquipamento.getPropriedades_fundamentais()));
+    
         return equipamento;
     }
     
-    public Map<String, Object> setPropriedades(Equipamento equipamento) {
+    public Map<String, Object> setPropriedades(Equipamento equipamento, Map<String, Object> propriedades_fundamentais) throws IOException {
         Map<String, Object> propriedades = new HashMap<>();
+    
+        // Carregar Tipo e Geometria
+        Tipo tipo = tipoService.carregarTipoPorId(equipamento.getTipo());
+        Geometria geometria = geometriaService.carregarGeometriaPorId(equipamento.getGeometria());
+    
+        if (tipo != null && tipo.getPropriedades() != null) {
+            propriedades.putAll(tipo.getPropriedades());
+        }
+    
+        if (geometria != null && geometria.getPropriedades() != null) {
+            propriedades.putAll(geometria.getPropriedades());
+        }
 
-        if (equipamento.getTipo() != null) {
-            propriedades.putAll(equipamento.getTipo().getPropriedades());
+        for (Map.Entry<String, Object> entry : propriedades_fundamentais.entrySet()) {
+            String chave = entry.getKey();
+            Object valor = entry.getValue();
+    
+            if (propriedades.containsKey(chave)) {
+                propriedades.put(chave, valor); 
+            } else {
+                propriedades.put(chave, valor); 
+            }
         }
-        
-        if (equipamento.getGeometria() != null) {
-            propriedades.putAll(equipamento.getGeometria().getPropriedades());
-        }
+    
         return propriedades;
     }
+    
+
 }
