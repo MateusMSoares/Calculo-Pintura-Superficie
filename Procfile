@@ -1,1 +1,1 @@
-web: cd backend && mvn spring-boot:run
+web: cd backend && mvn clean install && mvn spring-boot:run
