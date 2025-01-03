@@ -1,15 +1,26 @@
+# Etapa de build
 FROM openjdk:21-jdk-slim AS build
 
+# Copia o código-fonte para o container
 COPY . /app/
 
+# Definir o diretório de trabalho
 WORKDIR /app/backend
 
+# Instalar o Maven
 RUN apt-get update && apt-get install -y maven
 
+# Compila o projeto usando Maven
+RUN mvn clean install
+
+# Etapa de execução (runtime)
 FROM openjdk:21-jdk-slim
 
-COPY --from=build /app/backend/target/calculo-0.0.1.jar /app/backend.jar
+# Copia os artefatos compilados do container de build
+COPY --from=build /app/backend/target/backend-*.jar /app/backend.jar
 
-EXPOSE 8080
+# Define o diretório de trabalho para a execução
+WORKDIR /app
 
+# Executa a aplicação usando o comando Java
 CMD ["java", "-jar", "/app/backend.jar"]
