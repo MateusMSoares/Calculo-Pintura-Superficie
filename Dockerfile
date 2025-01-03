@@ -6,9 +6,6 @@ WORKDIR /app/backend
 
 RUN apt-get update && apt-get install -y maven
 
-# Comando de depuração para verificar o conteúdo do diretório target
-RUN ls -l /app/backend/target/
-
 FROM openjdk:21-jdk-slim
 
 COPY --from=build /app/backend/target/calculo-0.0.1.jar /app/backend.jar
