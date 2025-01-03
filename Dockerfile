@@ -1,10 +1,10 @@
-FROM openjdk:21-jdk-slim AS build
-
-RUN apt-get update && apt-get install -y maven
+FROM maven:3.9.0-eclipse-temurin-21 AS build
 
 COPY . /app/
 
 WORKDIR /app/backend
+
+RUN mvn clean package -DskipTests
 
 FROM openjdk:21-jdk-slim
 
