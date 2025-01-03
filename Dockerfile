@@ -1,10 +1,10 @@
-FROM maven:3.9.0-eclipse-temurin-21 AS build
+FROM openjdk:21-jdk-slim AS build
 
 COPY . /app/
 
 WORKDIR /app/backend
 
-RUN mvn clean package -DskipTests
+RUN apt-get update && apt-get install -y maven
 
 # Comando de depuração para verificar o conteúdo do diretório target
 RUN ls -l /app/backend/target/
