@@ -1,9 +1,15 @@
-FROM openjdk:21-jdk-slim AS build
-
-RUN apt-get update && apt-get install -y maven
+FROM maven:3.9.0-eclipse-temurin-21 AS build
 
 COPY . /app/
 
 WORKDIR /app/backend
 
-RUN mvn -DoutputFile=target/mvn-dependency-list.log -B -DskipTests clean dependency:list install
+RUN mvn clean package -DskipTests
+
+FROM openjdk:21-jdk-slim
+
+COPY --from=build /app/backend/target/calculo-0.0.1.jar /app/backend.jar
+
+EXPOSE 8080
+
+CMD ["java", "-jar", "/app/backend.jar"]
