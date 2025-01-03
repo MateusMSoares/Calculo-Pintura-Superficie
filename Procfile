@@ -1,0 +1,1 @@
+web: npm --prefix frontend install && npm --prefix frontend run build && cd backend && mvn spring-boot:run
