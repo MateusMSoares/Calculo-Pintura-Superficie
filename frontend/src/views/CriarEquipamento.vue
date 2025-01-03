@@ -86,7 +86,7 @@
         };
 
         try {
-          await axios.post('http://localhost:8080/equipamento/', equipamentoParaEnviar);
+          await axios.post('https://calculo-pintura-superficie-production.up.railway.app/equipamento/', equipamentoParaEnviar);
           this.equipamentoCriado = true;
         } catch (error) {
           console.error('Erro ao criar equipamento:', error);
@@ -94,7 +94,7 @@
       },
       async carregarTipos() {
         try {
-          const response = await axios.get('http://localhost:8080/tipo/');
+          const response = await axios.get('https://calculo-pintura-superficie-production.up.railway.app/tipo/');
           this.tipos = response.data;
         } catch (error) {
           console.error('Erro ao carregar tipos:', error);
@@ -102,7 +102,7 @@
       },
       async carregarGeometrias() {
         try {
-          const response = await axios.get('http://localhost:8080/geometria/');
+          const response = await axios.get('https://calculo-pintura-superficie-production.up.railway.app/geometria/');
           this.geometrias = response.data;
         } catch (error) {
           console.error('Erro ao carregar geometrias:', error);

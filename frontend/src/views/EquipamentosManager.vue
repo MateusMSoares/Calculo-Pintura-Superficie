@@ -41,7 +41,7 @@
     methods: {
       async carregarEquipamentos() {
         try {
-          const response = await axios.get('http://localhost:8080/equipamento/');
+          const response = await axios.get('https://calculo-pintura-superficie-production.up.railway.app/equipamento/');
           this.equipamentos = response.data.map((equipamento) => ({
             ...equipamento,
             expandido: false, // Inicialmente os detalhes estão ocultos
