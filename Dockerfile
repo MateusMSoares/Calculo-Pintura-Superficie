@@ -16,8 +16,8 @@ RUN mvn clean install
 # Etapa de execução (runtime)
 FROM openjdk:21-jdk-slim
 
-# Copia os artefatos compilados do container de build
-COPY --from=build /app/backend/target/backend-*.jar /app/backend.jar
+# Copia o artefato compilado (qualquer .jar gerado) da etapa de build
+COPY --from=build /app/backend/target/*.jar /app/backend.jar
 
 # Define o diretório de trabalho para a execução
 WORKDIR /app
