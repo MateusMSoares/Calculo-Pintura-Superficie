@@ -1,4 +1,8 @@
-const app = Vue.createApp({
+// Importando Vue e Axios no início do seu arquivo
+import { createApp } from 'vue';  // Para usar o Vue
+import axios from 'axios';         // Para usar o Axios
+
+const app = createApp({
   data() {
     return {
       equipamento: {
@@ -24,7 +28,8 @@ const app = Vue.createApp({
       };
     },
     isFormInvalid() {
-      return !this.equipamento.nome || !this.equipamento.tipo || !this.equipamento.geometria;
+      const propriedadesPreenchidas = Object.keys(this.equipamento.propriedades).length > 0;
+      return !this.equipamento.nome || !this.equipamento.tipo || !this.equipamento.geometria || !propriedadesPreenchidas;
     }
   },
   mounted() {
@@ -43,8 +48,10 @@ const app = Vue.createApp({
       try {
         const response = await axios.post('http://localhost:8080/equipamento/', equipamentoParaEnviar);
         this.equipamentoCriado = true;
+        console.log('Equipamento criado com sucesso:', response.data);
       } catch (error) {
         console.error('Erro ao criar equipamento:', error);
+        alert('Erro ao criar equipamento. Por favor, tente novamente.');
       }
     },
     async carregarTipos() {
@@ -65,14 +72,9 @@ const app = Vue.createApp({
     },
     carregarPropriedadesFundamentais() {
       const geometriaSelecionada = this.geometrias.find(geometria => geometria.id === this.equipamento.geometria);
-      if (geometriaSelecionada) {
-        // Aqui estamos garantindo que as propriedades estarão no objeto
+      if (geometriaSelecionada && Array.isArray(geometriaSelecionada.propriedades_fundamentais)) {
         this.equipamento.propriedades = geometriaSelecionada.propriedades_fundamentais.reduce((acc, chave) => {
-          if (geometriaSelecionada.propriedades[chave] !== undefined) {
-            acc[chave] = geometriaSelecionada.propriedades[chave];
-          } else {
-            acc[chave] = 0;  // Valor padrão, caso a chave não tenha um valor inicial
-          }
+          acc[chave] = geometriaSelecionada.propriedades[chave] !== undefined ? geometriaSelecionada.propriedades[chave] : 0;
           return acc;
         }, {});
       } else {
@@ -82,4 +84,5 @@ const app = Vue.createApp({
   }    
 });
 
+// Monta a aplicação Vue no elemento com o id "app"
 app.mount('#app');
