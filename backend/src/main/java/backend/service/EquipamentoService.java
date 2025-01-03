@@ -8,7 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import backend.dto.NewEquipamentDto;
+import backend.dto.EquipamentDto;
 import backend.entitys.Equipamento;
 import backend.entitys.Geometria;
 import backend.entitys.Tipo;
@@ -43,7 +43,7 @@ public class EquipamentoService {
         return equipamentos;
     }
     
-    public Equipamento criarEquipamento(NewEquipamentDto newEquipamento) throws IOException {
+    public Equipamento criarEquipamento(EquipamentDto newEquipamento) throws IOException {
         Equipamento equipamento = new Equipamento();
         equipamento.setNome(newEquipamento.getNome());
         equipamento.setTipo(newEquipamento.getTipoId());

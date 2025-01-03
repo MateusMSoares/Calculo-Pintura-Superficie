@@ -12,7 +12,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class NewEquipamentDto {
+public class EquipamentDto {
     private String nome;
     private int tipoId;
     private int geometriaId;

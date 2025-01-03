@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import backend.dto.NewEquipamentDto;
+import backend.dto.EquipamentDto;
 import backend.entitys.Equipamento;
 import backend.service.EquipamentoService;
 
@@ -48,7 +48,7 @@ public class EquipamentoController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Equipamento> adicionarEquipamento(@RequestBody NewEquipamentDto newEquipamentDto) throws IOException{
+    public ResponseEntity<Equipamento> adicionarEquipamento(@RequestBody EquipamentDto newEquipamentDto) throws IOException{
         Equipamento equipamento = equipamentoService.criarEquipamento(newEquipamentDto);
         System.out.println("Equipamento: " + equipamento.getPropriedades());
         equipamentoService.getJsonReader().salvarEquipamento(equipamento);
