@@ -38,9 +38,9 @@ public class EquipamentoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Equipamento> procuraPorId(@PathVariable int id) {
+    public ResponseEntity<Equipamento> procurarPorId(@PathVariable int id) {
         try {
-            Equipamento equipamento = equipamentoService.procuraPorId(id);
+            Equipamento equipamento = equipamentoService.procurarPorId(id);
             return ResponseEntity.ok(equipamento);
         } catch (Exception e) {
             return ResponseEntity.status(404).body(null);

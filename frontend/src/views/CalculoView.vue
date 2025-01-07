@@ -24,23 +24,20 @@
             <button type="button" class="btn-close" @click="closeModal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <!-- Equipamento Selecionado -->
             <p><strong>Equipamento Selecionado:</strong> {{ equipamentoSelecionado?.nome }}</p>
             <p>Geometria: {{ geometriaNome }}</p>
+            <p>Tipo: {{ tipoNome }}</p>
             
-            <!-- Resultado do Cálculo -->
             <p><strong>Resultado do Cálculo:</strong></p>
             <ul>
               <li v-for="(valor, chave) in resultado" :key="chave">{{ chave }}: {{ valor }}</li>
             </ul>
-            
-            <!-- Exibindo a fórmula com valores -->
+
             <p><strong>Fórmula com Valores:</strong></p>
             <ul>
               <li v-for="(valor, chave) in formulaComValores" :key="chave">{{ chave }}: {{ valor }}</li>
             </ul>
-            
-            <!-- Exibindo a fórmula original -->
+
             <p><strong>Fórmula Original:</strong></p>
             <ul>
               <li v-for="(valor, chave) in formulaOriginal" :key="chave">{{ chave }}: {{ valor }}</li>
@@ -66,7 +63,8 @@
         resultado: {},
         formulaComValores: {},
         formulaOriginal: {},
-        geometriaNome: {}
+        geometriaNome: '',
+        tipoNome: ''
       };
     },
     mounted() {
@@ -93,7 +91,8 @@
               this.resultado = response.data.resultado;
               this.formulaComValores = response.data.formulas_com_valores;
               this.formulaOriginal = response.data.formulas_originais;
-              this.carregarGeometrias();
+              await this.carregarGeometria();
+              await this.carregarTipo();
               this.showModal(); // Exibe o modal com o resultado
               console.log('Resultado do cálculo:', this.resultado);
               console.log('Fórmula com valores:', this.formulaComValores);
@@ -106,24 +105,42 @@
           console.error('Erro ao calcular equipamento:', error);
         }
       },
-      async carregarGeometrias() {
+      async carregarGeometria() {
         try {
           // Verifique se a geometria está disponível
           if (this.equipamentoSelecionado && this.equipamentoSelecionado.geometria) {
             console.log('ID da Geometria:', this.equipamentoSelecionado.geometria);
 
             // Realizando a requisição corretamente com a interpolação
-            const response = await axios.get(`http://localhost:8080/equipamento/geometria/${this.equipamentoSelecionado.geometria}`);
+            const response = await axios.get(`http://localhost:8080/geometria/${this.equipamentoSelecionado.geometria}`);
 
             this.geometriaNome = response.data.nome;
             console.log('Nome da Geometria:', this.geometriaNome);
-            } else {
-              console.error('Equipamento selecionado não tem geometria.');
-            }
-            } catch (error) {
-            console.error('Erro ao carregar geometrias:', error);
+          } else {
+            console.error('Equipamento selecionado não tem geometria.');
           }
-        },
+        } catch (error) {
+          console.error('Erro ao carregar geometrias:', error);
+        }
+      },
+      async carregarTipo() {
+        try {
+          // Verifique se o tipo está disponível
+          if (this.equipamentoSelecionado && this.equipamentoSelecionado.tipo) {
+            console.log('ID do Tipo:', this.equipamentoSelecionado.tipo);
+
+            // Realizando a requisição corretamente com a interpolação
+            const response = await axios.get(`http://localhost:8080/tipo/${this.equipamentoSelecionado.tipo}`);
+
+            this.tipoNome = response.data.nome;
+            console.log('Nome do Tipo:', this.tipoNome);
+          } else {
+            console.error('Equipamento selecionado não tem tipo.');
+          }
+        } catch (error) {
+          console.error('Erro ao carregar tipos:', error);
+        }
+      },
       showModal() {
         const modal = new window.bootstrap.Modal(document.getElementById('resultadoModal'));
         modal.show();

@@ -30,7 +30,7 @@ public class EquipamentoService {
         this.jsonReader = new JsonReader();
     }
 
-    public Equipamento procuraPorId(int idEquipamento) throws IOException {
+    public Equipamento procurarPorId(int idEquipamento) throws IOException {
         try {
             return jsonReader.carregarEquipamentoPorId(idEquipamento);
     
@@ -60,8 +60,8 @@ public class EquipamentoService {
         Map<String, Object> propriedades = new HashMap<>();
     
         // Carregar Tipo e Geometria
-        Tipo tipo = tipoService.carregarTipoPorId(equipamento.getTipo());
-        Geometria geometria = geometriaService.procuraPorId(equipamento.getGeometria());
+        Tipo tipo = tipoService.procurarPorId(equipamento.getTipo());
+        Geometria geometria = geometriaService.procurarPorId(equipamento.getGeometria());
     
         if (tipo != null && tipo.getPropriedades() != null) {
             propriedades.putAll(tipo.getPropriedades());
@@ -90,7 +90,7 @@ public class EquipamentoService {
         Map<String, Object> formulasOriginais = new HashMap<>();
         Map<String, Object> formulasComValores = new HashMap<>();
         
-        Geometria geometria = geometriaService.procuraPorId(equipamento.getGeometria());
+        Geometria geometria = geometriaService.procurarPorId(equipamento.getGeometria());
         Map<String, Object> propriedades = geometria.getPropriedades();
         Map<String, String> formulas = geometria.getFormulas();
         

@@ -33,10 +33,10 @@ public class GeometriaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Geometria> procuraPorId(@PathVariable int id) {
+    public ResponseEntity<Geometria> procurarPorId(@PathVariable int id) {
         System.out.println("Carregando geometria por id " + id);
         try {
-            Geometria geometria = geometriaService.procuraPorId(id);
+            Geometria geometria = geometriaService.procurarPorId(id);
             return ResponseEntity.ok(geometria);
         } catch (Exception e) {
             return ResponseEntity.status(404).body(null);
