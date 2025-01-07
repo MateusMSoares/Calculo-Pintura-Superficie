@@ -86,9 +86,9 @@ public class EquipamentoService {
     }
 
     public Map<String, Object> calcularMedidas(Equipamento equipamento) throws Exception {
-        Map<String, Object> mapaResultados = new HashMap<>();
-        Map<String, Object> mapaFormulasOriginais = new HashMap<>();
-        Map<String, Object> mapaFormulasComValores = new HashMap<>();
+        Map<String, Object> resultados = new HashMap<>();
+        Map<String, Object> formulasOriginais = new HashMap<>();
+        Map<String, Object> formulasComValores = new HashMap<>();
         
         Geometria geometria = geometriaService.carregarGeometriaPorId(equipamento.getGeometria());
         Map<String, Object> propriedades = geometria.getPropriedades();
@@ -97,8 +97,8 @@ public class EquipamentoService {
         for (Map.Entry<String, String> formulaEntry : formulas.entrySet()) {
             String chave = formulaEntry.getKey();
             String formula = formulaEntry.getValue();
-            
-            mapaFormulasOriginais.put(chave, formula);
+
+            formulasOriginais.put(chave, formula);
             
             String formulaComValores = formula;
             for (Map.Entry<String, Object> propEntry : propriedades.entrySet()) {
@@ -107,7 +107,7 @@ public class EquipamentoService {
                 formulaComValores = formulaComValores.replace(propKey, String.format("%.2f", propValue));
             }
             
-            mapaFormulasComValores.put(chave, formulaComValores);
+            formulasComValores.put(chave, formulaComValores);
             
             ExpressionBuilder builder = new ExpressionBuilder(formula);
         
@@ -123,44 +123,31 @@ public class EquipamentoService {
                 expression.setVariable(propKey, propValue);
             }
         
-            // Avalia a expressão
             try {
                 double result = expression.evaluate();
-                mapaResultados.put(chave, result); 
+                resultados.put(chave, result);
             } catch (Exception e) {
                 e.printStackTrace();
-                mapaResultados.put(chave, "Error evaluating formula");
+                resultados.put(chave, "Error evaluating formula");
             }
         }
 
         for (Map.Entry<String, Object> entry : propriedades.entrySet()) {
             String chave = entry.getKey();
-            if (!mapaResultados.containsKey(chave)) {
-                mapaResultados.put(chave, entry.getValue());
-                mapaFormulasOriginais.put(chave, "Propriedade: " + chave);
-                mapaFormulasComValores.put(chave, String.format("%.2f", entry.getValue()));
+            if (!resultados.containsKey(chave)) {
+                resultados.put(chave, entry.getValue());
+                formulasOriginais.put(chave, "Propriedade: " + chave);
+                formulasComValores.put(chave, String.format("%.2f", entry.getValue()));
             }
         }
         
-        System.out.println("Resultados:");
-        for (Map.Entry<String, Object> entry : mapaResultados.entrySet()) {
-            System.out.println("resultado: " + entry.getKey() + " = " + entry.getValue());
-        }
+        Map<String, Object> resultado = new HashMap<>();
+        resultado.put("resultado", resultados);
+        resultado.put("formulas_originais", formulasOriginais);
+        resultado.put("formulas_com_valores", formulasComValores);
         
-        System.out.println("Fórmulas Originais:");
-        for (Map.Entry<String, Object> entry : mapaFormulasOriginais.entrySet()) {
-            System.out.println("fórmula original: " + entry.getKey() + " = " + entry.getValue());
-        }
-    
-        System.out.println("Fórmulas com Valores:");
-        for (Map.Entry<String, Object> entry : mapaFormulasComValores.entrySet()) {
-            System.out.println("fórmula com valores: " + entry.getKey() + " = " + entry.getValue());
-        }
-    
-        mapaResultados.put("formulas_originais", mapaFormulasOriginais);
-        mapaResultados.put("formulas_com_valores", mapaFormulasComValores);
+        return resultado;
+    }
         
-        return mapaResultados;
-    }    
     
 }
