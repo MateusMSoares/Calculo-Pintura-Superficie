@@ -46,7 +46,7 @@ public class JsonReader {
         return geometrias;
     }
 
-    public Geometria carregarGeometriaPorId(int id) throws IOException {
+    public Geometria procuraPorId(int id) throws IOException {
         List<Geometria> geometrias = carregarGeometrias();
         for (Geometria geometria : geometrias) {
             if (geometria.getId() == id) {

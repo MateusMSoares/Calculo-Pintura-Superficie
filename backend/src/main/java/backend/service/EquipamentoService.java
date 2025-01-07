@@ -61,7 +61,7 @@ public class EquipamentoService {
     
         // Carregar Tipo e Geometria
         Tipo tipo = tipoService.carregarTipoPorId(equipamento.getTipo());
-        Geometria geometria = geometriaService.carregarGeometriaPorId(equipamento.getGeometria());
+        Geometria geometria = geometriaService.procuraPorId(equipamento.getGeometria());
     
         if (tipo != null && tipo.getPropriedades() != null) {
             propriedades.putAll(tipo.getPropriedades());
@@ -90,7 +90,7 @@ public class EquipamentoService {
         Map<String, Object> formulasOriginais = new HashMap<>();
         Map<String, Object> formulasComValores = new HashMap<>();
         
-        Geometria geometria = geometriaService.carregarGeometriaPorId(equipamento.getGeometria());
+        Geometria geometria = geometriaService.procuraPorId(equipamento.getGeometria());
         Map<String, Object> propriedades = geometria.getPropriedades();
         Map<String, String> formulas = geometria.getFormulas();
         

@@ -26,6 +26,7 @@
           <div class="modal-body">
             <!-- Equipamento Selecionado -->
             <p><strong>Equipamento Selecionado:</strong> {{ equipamentoSelecionado?.nome }}</p>
+            <p>Geometria: {{ geometriaNome }}</p>
             
             <!-- Resultado do Cálculo -->
             <p><strong>Resultado do Cálculo:</strong></p>
@@ -64,7 +65,8 @@
         equipamentos: [],
         resultado: {},
         formulaComValores: {},
-        formulaOriginal: {}
+        formulaOriginal: {},
+        geometriaNome: {}
       };
     },
     mounted() {
@@ -91,6 +93,7 @@
               this.resultado = response.data.resultado;
               this.formulaComValores = response.data.formulas_com_valores;
               this.formulaOriginal = response.data.formulas_originais;
+              this.carregarGeometrias();
               this.showModal(); // Exibe o modal com o resultado
               console.log('Resultado do cálculo:', this.resultado);
               console.log('Fórmula com valores:', this.formulaComValores);
@@ -103,6 +106,24 @@
           console.error('Erro ao calcular equipamento:', error);
         }
       },
+      async carregarGeometrias() {
+        try {
+          // Verifique se a geometria está disponível
+          if (this.equipamentoSelecionado && this.equipamentoSelecionado.geometria) {
+            console.log('ID da Geometria:', this.equipamentoSelecionado.geometria);
+
+            // Realizando a requisição corretamente com a interpolação
+            const response = await axios.get(`http://localhost:8080/equipamento/geometria/${this.equipamentoSelecionado.geometria}`);
+
+            this.geometriaNome = response.data.nome;
+            console.log('Nome da Geometria:', this.geometriaNome);
+            } else {
+              console.error('Equipamento selecionado não tem geometria.');
+            }
+            } catch (error) {
+            console.error('Erro ao carregar geometrias:', error);
+          }
+        },
       showModal() {
         const modal = new window.bootstrap.Modal(document.getElementById('resultadoModal'));
         modal.show();
