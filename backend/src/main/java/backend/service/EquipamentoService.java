@@ -94,12 +94,14 @@ public class EquipamentoService {
         Map<String, Object> propriedades = geometria.getPropriedades();
         Map<String, String> formulas = geometria.getFormulas();
         
+        // Fase 1: Calcular as fórmulas e atribuir resultados diretamente às propriedades
         for (Map.Entry<String, String> formulaEntry : formulas.entrySet()) {
             String chave = formulaEntry.getKey();
             String formula = formulaEntry.getValue();
-
+    
             formulasOriginais.put(chave, formula);
             
+            // Substituir as variáveis nas fórmulas pelas propriedades calculadas
             String formulaComValores = formula;
             for (Map.Entry<String, Object> propEntry : propriedades.entrySet()) {
                 String propKey = propEntry.getKey();
@@ -108,7 +110,8 @@ public class EquipamentoService {
             }
             
             formulasComValores.put(chave, formulaComValores);
-            
+    
+            // Usar ExpressionBuilder para avaliar a fórmula
             ExpressionBuilder builder = new ExpressionBuilder(formula);
         
             for (Map.Entry<String, Object> propEntry : propriedades.entrySet()) {
@@ -124,14 +127,18 @@ public class EquipamentoService {
             }
         
             try {
+                // Avaliar a expressão
                 double result = expression.evaluate();
                 resultados.put(chave, result);
+                // Atribuir o valor calculado diretamente à propriedade
+                propriedades.put(chave, result);
             } catch (Exception e) {
                 e.printStackTrace();
                 resultados.put(chave, "Error evaluating formula");
             }
         }
-
+    
+        // Fase 2: Garantir que as propriedades que não foram calculadas nas fórmulas sejam adicionadas aos resultados
         for (Map.Entry<String, Object> entry : propriedades.entrySet()) {
             String chave = entry.getKey();
             if (!resultados.containsKey(chave)) {
@@ -141,13 +148,12 @@ public class EquipamentoService {
             }
         }
         
+        // Construir o resultado final
         Map<String, Object> resultado = new HashMap<>();
         resultado.put("resultado", resultados);
         resultado.put("formulas_originais", formulasOriginais);
         resultado.put("formulas_com_valores", formulasComValores);
         
         return resultado;
-    }
-        
-    
+    }  
 }
