@@ -55,7 +55,7 @@
       async carregarEquipamentos() {
         try {
           // Aqui você faz a requisição para carregar os equipamentos da API
-          const response = await axios.get('https://calculo-pintura-superficie-production.up.railway.app/equipamento/');
+          const response = await axios.get('http://localhost:8080/equipamento/');
           this.equipamentos = response.data.map(equipamento => ({
             ...equipamento,
             expandido: false // Inicialmente os detalhes estão ocultos
@@ -64,20 +64,26 @@
           console.error('Erro ao carregar equipamentos:', error);
         }
       },
-      calcularEquipamento() {
-        if (this.equipamentoSelecionado !== null) {
-          // Busca o equipamento selecionado
-          const equipamento = this.equipamentos.find(e => e.id === this.equipamentoSelecionado);
-          if (equipamento) {
-            // Aqui você pode fazer o cálculo real. Para este exemplo, estamos apenas simulando um cálculo.
-            this.resultado = {
-              nome: equipamento.nome,
-              calculo: `Resultado do cálculo para ${equipamento.nome}`
-            };
-  
-            // Exibir o modal com os resultados
-            this.showModal = true;
-          }
+      async calcularEquipamento() {
+        try {
+            // Verifica se o equipamento foi selecionado
+            if (this.equipamentoSelecionado !== null) {
+                const equipamento = this.equipamentos.find(e => e.id === this.equipamentoSelecionado);
+                
+                // Fazendo a requisição para a API com o ID do equipamento selecionado
+                const response = await axios.post('http://localhost:8080/equipamento/calcular', equipamento);
+
+                // Supondo que a resposta contenha o resultado do cálculo
+                if (response.data) {
+                    this.resultado = response.data; // A resposta pode conter o cálculo
+                    this.showModal = true; // Exibe o modal com o resultado
+                    console.log('Resultado do cálculo:', this.resultado);
+                }
+            } else {
+                console.log('Nenhum equipamento selecionado');
+            }
+        } catch (error) {
+            console.error('Erro ao calcular equipamento:', error);
         }
       }
     }

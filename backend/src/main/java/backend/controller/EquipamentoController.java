@@ -14,6 +14,7 @@ import backend.service.EquipamentoService;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -54,6 +55,17 @@ public class EquipamentoController {
         equipamentoService.getJsonReader().salvarEquipamento(equipamento);
    
         return ResponseEntity.ok(equipamento);
+    }
+
+    @PostMapping("/calcular")
+    public ResponseEntity<Map<String, Object>> calcular(@RequestBody Equipamento equipamentoDto) {
+        try{
+            Map<String, Object> result = equipamentoService.calcularMedidas(equipamentoDto);
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body(null);
+        }
     }
 
 }

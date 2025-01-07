@@ -4,8 +4,8 @@
         "nome": "Cilindro",
         "propriedades_fundamentais": ["diametro", "altura"],
         "propriedades": {
-            "diametro": 0.00,
-            "altura": 0.00,
+            "diametro": 5.00,
+            "altura": 10.00,
             "area": 0.00,
             "volume": 0.00,
             "area_fundo": 0.00,
@@ -13,11 +13,11 @@
             "volume_isolamento": 0.00
         },
         "formulas": {
-            "area": "((2 * 3.14) * diametro / 2) * altura",
-            "volume": "3.14 * (diametro / 2)**2 * altura",
+            "area": "2 * 3.14 * (diametro / 2) * altura",
+            "volume": "3.14 * (diametro / 2)^2 * altura",
             "volume_isolamento": "area * altura",
-            "area_fundo": "3.14 * (diametro / 2)**2",
-            "area_teto": "3.14 * (diametro / 2)**2"
+            "area_fundo": "3.14 * (diametro / 2)^2",
+            "area_teto": "3.14 * (diametro / 2)^2"
         }
     },
     {
@@ -36,7 +36,7 @@
         "formulas": {
             "area": "l * l",
             "volume": "area * altura",
-            "volume_isolamento": "area * altura_isolamento",
+            "volume_isolamento": "area * altura",
             "area_fundo": "l * l",
             "area_teto": "l * l"
         }
