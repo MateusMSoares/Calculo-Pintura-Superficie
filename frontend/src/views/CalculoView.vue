@@ -17,31 +17,45 @@
 
     <!-- Modal de Resultado -->
     <div class="modal fade" id="resultadoModal" tabindex="-1" aria-labelledby="resultadoModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-lg"> <!-- Modal Largo -->
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="resultadoModalLabel">Resultado do Cálculo</h5>
             <button type="button" class="btn-close" @click="closeModal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <p><strong>Equipamento Selecionado:</strong> {{ equipamentoSelecionado?.nome }}</p>
-            <p>Geometria: {{ geometriaNome }}</p>
-            <p>Tipo: {{ tipoNome }}</p>
-            
-            <p><strong>Resultado do Cálculo:</strong></p>
-            <ul>
-              <li v-for="(valor, chave) in resultado" :key="chave">{{ chave }}: {{ valor }}</li>
-            </ul>
+            <p class="detalhes"><strong>Equipamento Selecionado:</strong> <strong>{{ equipamentoSelecionado?.nome }}</strong></p>
+            <p class="detalhes">Geometria: <strong>{{ geometriaNome }}</strong></p>
+            <p class="detalhes">Tipo: <strong>{{ tipoNome }}</strong></p>
 
-            <p><strong>Fórmula com Valores:</strong></p>
-            <ul>
-              <li v-for="(valor, chave) in formulaComValores" :key="chave">{{ chave }}: {{ valor }}</li>
-            </ul>
 
-            <p><strong>Fórmula Original:</strong></p>
-            <ul>
-              <li v-for="(valor, chave) in formulaOriginal" :key="chave">{{ chave }}: {{ valor }}</li>
-            </ul>
+            <!-- Layout lado a lado com mais controle e espaçamento -->
+            <div class="d-flex">
+              <div class="modal-column">
+                <p class="section-title">Resultado do Cálculo:</p>
+                <ul>
+                  <li v-for="(valor, chave) in resultado" :key="chave">
+                    <span class="key">{{ chave }}:</span> <span class="value">{{ valor + ' metros.'}}</span>
+                  </li>
+                </ul>
+              </div>
+              <div class="modal-column">
+                <p class="section-title">Fórmula com Valores:</p>
+                <ul>
+                  <li v-for="(valor, chave) in formulaComValores" :key="chave">
+                    <span class="key">{{ chave }}:</span> <span class="value">{{ valor }}</span>
+                  </li>
+                </ul>
+              </div>
+              <div class="modal-column">
+                <p class="section-title">Fórmula Original:</p>
+                <ul>
+                  <li v-for="(valor, chave) in formulaOriginal" :key="chave">
+                    <span class="key">{{ chave }}:</span> <span class="value">{{ valor }}</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" @click="closeModal">Fechar</button>
@@ -51,6 +65,80 @@
     </div>
   </div>
 </template>
+
+<style scoped>
+/* Estilos gerais do modal */
+.modal-dialog.modal-lg {
+  max-width: 95%; /* Modal maior com largura ainda mais ampla */
+  max-height: 80vh; /* Define uma altura máxima para o modal */
+  margin-top: 10vh; /* Distância do topo da tela */
+}
+
+.modal-content {
+  padding: 30px;
+}
+
+.modal-title {
+  font-size: 3rem;
+  font-weight: 700;
+  align-content: center;
+}
+
+.detalhes {
+  font-size: 1.2rem;
+}
+
+/* Controle preciso do layout dentro do modal */
+.d-flex {
+  display: flex;
+  justify-content: space-between;
+  gap: 3rem; /* Aumenta o espaçamento entre as colunas */
+}
+
+/* Estilos das colunas dentro do modal */
+.modal-column {
+  flex: 1; /* Faz cada coluna ter o mesmo tamanho */
+  margin-right: 1rem;
+}
+
+.modal-column:last-child {
+  margin-right: 0;
+}
+
+/* Estilo das seções dentro de cada coluna */
+.section-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #343a40; /* Cor do título */
+}
+
+/* Personalização dos itens de listas */
+ul {
+  list-style-type: none;
+  padding-left: 0;
+  font-size: 20px;
+}
+
+ul li {
+  margin-bottom: 1rem; /* Maior espaço entre os itens */
+}
+
+.key {
+  font-weight: bold;
+  color: #28a745; /* Cor verde para as chaves, agora mais vibrante */
+}
+
+.value {
+  color: #495057; /* Cor mais escura para os valores */
+  font-style: italic;
+}
+
+/* Ajuste de espaço entre os itens da lista */
+ul li {
+  margin-bottom: 1.5rem; /* Aumenta o espaço entre os itens */
+}
+</style>
 
 <script>
   import axios from 'axios';
@@ -88,15 +176,12 @@
             const response = await axios.post('http://localhost:8080/equipamento/calcular', this.equipamentoSelecionado);
 
             if (response.data) {
-              this.resultado = response.data.resultado;
-              this.formulaComValores = response.data.formulas_com_valores;
-              this.formulaOriginal = response.data.formulas_originais;
+              this.resultado = this.normalizarObjeto(response.data.resultado);
+              this.formulaComValores = this.normalizarObjeto(response.data.formulas_com_valores);
+              this.formulaOriginal = this.normalizarObjeto(response.data.formulas_originais);
               await this.carregarGeometria();
               await this.carregarTipo();
-              this.showModal(); // Exibe o modal com o resultado
-              console.log('Resultado do cálculo:', this.resultado);
-              console.log('Fórmula com valores:', this.formulaComValores);
-              console.log('Fórmula original:', this.formulaOriginal);
+              this.showModal();
             }
           } else {
             console.log('Nenhum equipamento selecionado');
@@ -148,6 +233,21 @@
       closeModal() {
         const modal = window.bootstrap.Modal.getInstance(document.getElementById('resultadoModal'));
         modal.hide();
+      },
+      normalizarObjeto(obj) {
+          const novoObj = {};
+          for (const chave in obj) {
+              if (Object.prototype.hasOwnProperty.call(obj, chave)) {
+                  const chaveNormalizada = this.normalizarTexto(chave);
+                  novoObj[chaveNormalizada] = obj[chave];
+              }
+          }
+          return novoObj;
+      },
+      normalizarTexto(texto) {
+          return texto
+              .replace(/_/g, ' ')  
+              .replace(/\b\w/g, letra => letra.toUpperCase())  
       }
     }
   };

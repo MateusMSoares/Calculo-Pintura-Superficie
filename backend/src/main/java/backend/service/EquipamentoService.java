@@ -143,7 +143,6 @@ public class EquipamentoService {
             String chave = entry.getKey();
             if (!resultados.containsKey(chave)) {
                 resultados.put(chave, entry.getValue());
-                formulasOriginais.put(chave, "Propriedade: " + chave);
                 formulasComValores.put(chave, String.format("%.2f", entry.getValue()));
             }
         }
