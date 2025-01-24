@@ -162,14 +162,20 @@ ul li {
     methods: {
       async carregarEquipamentos() {
         try {
-          const response = await axios.get(`${apiBaseUrl}/equipamento/`);
-          this.equipamentos = response.data.map(equipamento => ({
-            ...equipamento,
-            expandido: false
-          }));
-        } catch (error) {
-          console.error('Erro ao carregar equipamentos:', error);
-        }
+            const response = await axios.get(`${apiBaseUrl}/equipamento/`);
+            console.log('Resposta da API:', response.data);  // Adicione esse log para verificar a estrutura
+            
+            if (Array.isArray(response.data)) {
+              this.equipamentos = response.data.map(equipamento => ({
+                ...equipamento,
+                expandido: false
+              }));
+            } else {
+              console.error('A resposta da API não é um array:', response.data);
+            }
+          } catch (error) {
+            console.error('Erro ao carregar equipamentos:', error);
+          }
       },
       async calcularEquipamento() {
         try {
