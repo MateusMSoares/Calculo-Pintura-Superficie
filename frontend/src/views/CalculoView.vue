@@ -141,7 +141,6 @@ ul li {
 </style>
 
 <script>
-  require('dotenv').config();
   import axios from 'axios';
   const apiBaseUrl = process.env.VUE_APP_API_BASE_URL;
 
