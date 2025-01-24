@@ -142,6 +142,8 @@ ul li {
 
 <script>
   import axios from 'axios';
+  const apiBaseUrlTeste = process.env.VUE_APP_API_BASE_URL_TEST;
+  const apiBaseUrl = process.env.VUE_APP_API_BASE_URL;
 
   export default {
     data() {
@@ -161,7 +163,7 @@ ul li {
     methods: {
       async carregarEquipamentos() {
         try {
-          const response = await axios.get('http://localhost:8080/equipamento/');
+          const response = await axios.get(`${apiBaseUrl}/equipamento/`);
           this.equipamentos = response.data.map(equipamento => ({
             ...equipamento,
             expandido: false
@@ -173,7 +175,7 @@ ul li {
       async calcularEquipamento() {
         try {
           if (this.equipamentoSelecionado !== null) {
-            const response = await axios.post('http://localhost:8080/equipamento/calcular', this.equipamentoSelecionado);
+            const response = await axios.post(`${apiBaseUrl}/equipamento/calcular`, this.equipamentoSelecionado);
 
             if (response.data) {
               this.resultado = this.normalizarObjeto(response.data.resultado);
@@ -197,7 +199,7 @@ ul li {
             console.log('ID da Geometria:', this.equipamentoSelecionado.geometria);
 
             // Realizando a requisição corretamente com a interpolação
-            const response = await axios.get(`http://localhost:8080/geometria/${this.equipamentoSelecionado.geometria}`);
+            const response = await axios.get(`${apiBaseUrl}/geometria/${this.equipamentoSelecionado.geometria}`);
 
             this.geometriaNome = response.data.nome;
             console.log('Nome da Geometria:', this.geometriaNome);
@@ -215,7 +217,7 @@ ul li {
             console.log('ID do Tipo:', this.equipamentoSelecionado.tipo);
 
             // Realizando a requisição corretamente com a interpolação
-            const response = await axios.get(`http://localhost:8080/tipo/${this.equipamentoSelecionado.tipo}`);
+            const response = await axios.get(`${apiBaseUrl}/tipo/${this.equipamentoSelecionado.tipo}`);
 
             this.tipoNome = response.data.nome;
             console.log('Nome do Tipo:', this.tipoNome);
