@@ -14,5 +14,23 @@
     "teto" : true,
     "fundo" : true,
     "area_teto" : 0.0
-  }
-} ]
+    }
+  }, {
+    "id" : 0,
+    "nome" : "teste 3 boy",
+    "tipo" : 1,
+    "geometria" : 1,
+    "propriedades" : {
+      "area" : 0.0,
+      "volume" : 0.0,
+      "isolamento" : true,
+      "lado" : 5,
+      "volume_isolamento" : 0.0,
+      "altura" : 50,
+      "area_fundo" : 0.0,
+      "teto" : true,
+      "fundo" : true,
+      "area_teto" : 0.0
+      }
+    }
+]
