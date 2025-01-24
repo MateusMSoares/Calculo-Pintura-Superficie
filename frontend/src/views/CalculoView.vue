@@ -163,6 +163,7 @@ ul li {
       async carregarEquipamentos() {
         try {
           const response = await axios.get(`${apiBaseUrl}/equipamento/`);
+          console.log('Equipamentos:', response.data);
           this.equipamentos = response.data.map(equipamento => ({
             ...equipamento,
             expandido: false
