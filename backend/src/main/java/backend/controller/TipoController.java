@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,6 +30,16 @@ public class TipoController {
         } catch (Exception e) {
             return ResponseEntity.status(404).body(null);
         }   
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Tipo> procurarPorId(@PathVariable int id) {
+        try {
+            Tipo tipo = tipoService.procurarPorId(id);
+            return ResponseEntity.ok(tipo);
+        } catch (Exception e) {
+            return ResponseEntity.status(404).body(null);
+        }
     }
 
 }

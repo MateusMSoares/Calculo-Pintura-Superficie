@@ -2,7 +2,7 @@
   "id" : 0,
   "nome" : "teste 2 boy",
   "tipo" : 1,
-  "geometria" : 2,
+  "geometria" : 1,
   "propriedades" : {
     "area" : 0.0,
     "volume" : 0.0,

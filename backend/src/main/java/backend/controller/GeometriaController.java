@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,7 +23,6 @@ public class GeometriaController {
 
     @GetMapping("/")
     public ResponseEntity<List<Geometria>> listarGeometrias() {
-        System.out.println("Listando geometrias");
         try {
             List<Geometria> geometrias = geometriaService.carregarGeometrias();
             return ResponseEntity.ok(geometrias);
@@ -30,5 +30,16 @@ public class GeometriaController {
             e.printStackTrace();
             return ResponseEntity.status(404).body(null);
         }   
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Geometria> procurarPorId(@PathVariable int id) {
+        System.out.println("Carregando geometria por id " + id);
+        try {
+            Geometria geometria = geometriaService.procurarPorId(id);
+            return ResponseEntity.ok(geometria);
+        } catch (Exception e) {
+            return ResponseEntity.status(404).body(null);
+        }
     }
 }

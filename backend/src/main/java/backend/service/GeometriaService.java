@@ -20,7 +20,7 @@ public class GeometriaService {
         return jsonReader.carregarGeometrias();
     }
 
-    public Geometria carregarGeometriaPorId(int id) throws IOException {
+    public Geometria procurarPorId(int id) throws IOException {
         return jsonReader.carregarGeometriaPorId(id);
     }
 

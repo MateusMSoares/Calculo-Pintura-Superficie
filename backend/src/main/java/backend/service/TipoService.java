@@ -19,7 +19,7 @@ public class TipoService {
         return jsonReader.carregarTipos();
     }
 
-    public Tipo carregarTipoPorId(int id) throws IOException {
+    public Tipo procurarPorId(int id) throws IOException {
         return jsonReader.carregarTipoPorId(id);
     }
 

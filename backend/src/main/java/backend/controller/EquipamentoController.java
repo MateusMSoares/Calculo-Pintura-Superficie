@@ -14,6 +14,7 @@ import backend.service.EquipamentoService;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,6 @@ public class EquipamentoController {
     public ResponseEntity<List<Equipamento>> listarEquipamentos() {
         try {
             List<Equipamento> equipamentos = equipamentoService.listarEquipamentos();
-            System.out.println("Equipamentos: " + equipamentos);
             return ResponseEntity.ok(equipamentos);
         } catch (Exception e) {
             return ResponseEntity.status(404).body(null);
@@ -38,9 +38,9 @@ public class EquipamentoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Equipamento> procuraPorId(@PathVariable int id) {
+    public ResponseEntity<Equipamento> procurarPorId(@PathVariable int id) {
         try {
-            Equipamento equipamento = equipamentoService.procuraPorId(id);
+            Equipamento equipamento = equipamentoService.procurarPorId(id);
             return ResponseEntity.ok(equipamento);
         } catch (Exception e) {
             return ResponseEntity.status(404).body(null);
@@ -50,10 +50,20 @@ public class EquipamentoController {
     @PostMapping("/")
     public ResponseEntity<Equipamento> adicionarEquipamento(@RequestBody EquipamentDto newEquipamentDto) throws IOException{
         Equipamento equipamento = equipamentoService.criarEquipamento(newEquipamentDto);
-        System.out.println("Equipamento: " + equipamento.getPropriedades());
         equipamentoService.getJsonReader().salvarEquipamento(equipamento);
    
         return ResponseEntity.ok(equipamento);
+    }
+
+    @PostMapping("/calcular")
+    public ResponseEntity<Map<String, Object>> calcular(@RequestBody Equipamento equipamentoDto) {
+        try{
+            Map<String, Object> result = equipamentoService.calcularMedidas(equipamentoDto);
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body(null);
+        }
     }
 
 }
