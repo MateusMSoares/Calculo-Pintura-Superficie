@@ -142,7 +142,6 @@ ul li {
 
 <script>
   import axios from 'axios';
-  const apiBaseUrlTeste = process.env.VUE_APP_API_BASE_URL_TEST;
   const apiBaseUrl = process.env.VUE_APP_API_BASE_URL;
 
   export default {
