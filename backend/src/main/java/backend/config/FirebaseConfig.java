@@ -3,16 +3,28 @@ package backend.config;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.Firestore;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
 
+@Configuration
 public class FirebaseConfig {
+
+    @Bean
+    public Firestore firestore() {
+        initializeFirebase(); 
+        return getFirestore();
+    }
+
     public static void initializeFirebase() {
         try {
-            FileInputStream serviceAccount = new FileInputStream("path/to/your/credentials-file.json");
+            // Caminho para o arquivo de credenciais
+            FileInputStream serviceAccount = new FileInputStream("frontend/src/config/calculosuperfice-firebase-adminsdk-pegyb-132ca3ac0c.json");
 
             // Inicializando o Firebase com as credenciais diretamente
             FirebaseOptions options = FirebaseOptions.builder()
@@ -35,3 +47,4 @@ public class FirebaseConfig {
         return FirestoreClient.getFirestore();
     }
 }
+

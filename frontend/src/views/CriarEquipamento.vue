@@ -42,6 +42,8 @@
 
 <script>
   import axios from 'axios';
+  const apiBaseUrl = 'https://calculo-pintura-superficie-production.up.railway.app';
+  const apiBaseUrlTeste = 'http://localhost:8080';
 
   export default {
     data() {
@@ -86,7 +88,7 @@
         };
 
         try {
-          await axios.post('https://calculo-pintura-superficie-production.up.railway.app/equipamento/', equipamentoParaEnviar);
+          await axios.post(`${apiBaseUrlTeste}/equipamento/`, equipamentoParaEnviar);
           this.equipamentoCriado = true;
         } catch (error) {
           console.error('Erro ao criar equipamento:', error);
@@ -94,7 +96,7 @@
       },
       async carregarTipos() {
         try {
-          const response = await axios.get('https://calculo-pintura-superficie-production.up.railway.app/tipo/');
+          const response = await axios.get(`${apiBaseUrl}/tipo/`);
           this.tipos = response.data;
         } catch (error) {
           console.error('Erro ao carregar tipos:', error);
@@ -102,7 +104,7 @@
       },
       async carregarGeometrias() {
         try {
-          const response = await axios.get('https://calculo-pintura-superficie-production.up.railway.app/geometria/');
+          const response = await axios.get(`${apiBaseUrl}/geometria/`);
           this.geometrias = response.data;
         } catch (error) {
           console.error('Erro ao carregar geometrias:', error);

@@ -1,12 +1,23 @@
 package backend.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.DocumentSnapshot;
+import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.QuerySnapshot;
+import com.google.cloud.firestore.SetOptions;
+import com.google.cloud.firestore.WriteResult;
+import com.google.firebase.cloud.FirestoreClient;
 
 import backend.dto.EquipamentDto;
 import backend.entitys.Equipamento;
@@ -25,6 +36,8 @@ public class EquipamentoService {
     private TipoService tipoService;
     @Autowired
     private GeometriaService geometriaService;
+    @Autowired
+    private Firestore db;
 
     public EquipamentoService() {
         this.jsonReader = new JsonReader();
@@ -40,8 +53,22 @@ public class EquipamentoService {
         }
     }
 
-    public List<Equipamento> listarEquipamentos() throws IOException{
-        List<Equipamento> equipamentos = jsonReader.carregarEquipamentos();
+    public List<Equipamento> listarEquipamentos() {
+        List<Equipamento> equipamentos = new ArrayList<>();
+        
+        ApiFuture<QuerySnapshot> query = db.collection("equipamentos").get();
+        try {
+            // Esperar pela consulta e obter os documentos
+            QuerySnapshot querySnapshot = query.get();
+            
+            for (DocumentSnapshot document : querySnapshot.getDocuments()) {
+                Equipamento equipamento = document.toObject(Equipamento.class);
+                equipamentos.add(equipamento);
+            }
+        } catch (Exception e) {
+            System.err.println("Erro ao listar equipamentos: " + e.getMessage());
+        }
+        
         return equipamentos;
     }
     
@@ -50,9 +77,30 @@ public class EquipamentoService {
         equipamento.setNome(newEquipamento.getNome());
         equipamento.setTipo(newEquipamento.getTipoId());
         equipamento.setGeometria(newEquipamento.getGeometriaId());
+        
         // Passando o Map de propriedades_fundamentais para o método setPropriedades
         equipamento.setPropriedades(this.setPropriedades(equipamento, newEquipamento.getPropriedades_fundamentais()));
-    
+
+        // Agora, vamos salvar o equipamento no Firestore
+        Firestore db = FirestoreClient.getFirestore();
+        
+        // Cria um documento na coleção 'equipamentos' com um ID automático
+        DocumentReference docRef = db.collection("equipamentos").document();  // Ou pode usar .document(id) para definir um ID específico
+        
+        // Configura os dados que serão salvos no Firestore
+        ApiFuture<WriteResult> future = docRef.set(equipamento, SetOptions.merge());  // merge() é usado para garantir que apenas os campos fornecidos sejam atualizados.
+        System.out.println("Criando equipamento..." + equipamento);
+
+        // Usando ApiFuture para lidar com a resposta assíncrona
+        future.addListener(() -> {
+            try {
+                WriteResult result = future.get();  // Espera a resposta do Firestore
+                System.out.println("Equipamento criado com sucesso! Timestamp: " + result.getUpdateTime());
+            } catch (Exception e) {
+                System.err.println("Erro ao criar o equipamento: " + e.getMessage());
+            }
+        }, Executors.newSingleThreadExecutor());  // Você precisa de um Executor para rodar o código assíncrono
+
         return equipamento;
     }
     
