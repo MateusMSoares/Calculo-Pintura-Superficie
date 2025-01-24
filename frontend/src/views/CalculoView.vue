@@ -141,6 +141,7 @@ ul li {
 </style>
 
 <script>
+  require('dotenv').config();
   import axios from 'axios';
   const apiBaseUrl = process.env.VUE_APP_API_BASE_URL;
 
@@ -162,7 +163,9 @@ ul li {
     methods: {
       async carregarEquipamentos() {
         try {
-          const response = await axios.get(`https://calculo-pintura-superficie-production.up.railway.app/equipamento/`);
+          const response = await axios.get(`${apiBaseUrl}/equipamento/`);
+          console.log('API Base URL:', apiBaseUrl);
+          console.log("");
           console.log('Equipamentos:', response.data);
           this.equipamentos = response.data.map(equipamento => ({
             ...equipamento,
