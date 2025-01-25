@@ -28,7 +28,7 @@ public class GeometriaService {
     
     try {
         // Acesse a coleção de geometrias
-        ApiFuture<QuerySnapshot> future = db.collection("geometrias").get();  // "geometrias" é o nome da coleção
+        ApiFuture<QuerySnapshot> future = db.collection("geometrias").get();
         
         // Esperar pela consulta e obter os documentos
         QuerySnapshot querySnapshot = future.get();
