@@ -1,46 +1,39 @@
 package backend.controller;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import backend.dto.EquipamentDto;
+import org.springframework.web.bind.annotation.*;
+import backend.dto.EquipamentoDto;
 import backend.entitys.Equipamento;
 import backend.service.EquipamentoService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/equipamento")
 public class EquipamentoController {
 
+    // O Spring irá injetar a dependência automaticamente
     @Autowired
-    EquipamentoService equipamentoService = new EquipamentoService();
+    EquipamentoService equipamentoService;
 
     @GetMapping("/")
-    public ResponseEntity<List<Equipamento>> listarEquipamentos() {
+    public ResponseEntity<List<EquipamentoDto>> listarEquipamentos() {
         try {
-            List<Equipamento> equipamentos = equipamentoService.listarEquipamentos();
+            List<EquipamentoDto> equipamentos = equipamentoService.listarEquipamentos();
             return ResponseEntity.ok(equipamentos);
         } catch (Exception e) {
             return ResponseEntity.status(404).body(null);
-        }   
+        }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Equipamento> procurarPorId(@PathVariable int id) {
+    public ResponseEntity<EquipamentoDto> procurarPorId(@PathVariable String id) {
         try {
-            Equipamento equipamento = equipamentoService.procurarPorId(id);
+            EquipamentoDto equipamento = equipamentoService.procurarPorId(id);
             return ResponseEntity.ok(equipamento);
         } catch (Exception e) {
             return ResponseEntity.status(404).body(null);
@@ -48,16 +41,14 @@ public class EquipamentoController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Equipamento> adicionarEquipamento(@RequestBody EquipamentDto newEquipamentDto) throws IOException{
-        Equipamento equipamento = equipamentoService.criarEquipamento(newEquipamentDto);
-        equipamentoService.getJsonReader().salvarEquipamento(equipamento);
-   
+    public ResponseEntity<Equipamento> adicionarEquipamento(@RequestBody Equipamento newEquipamento) throws IOException {
+        Equipamento equipamento = equipamentoService.criarEquipamento(newEquipamento);
         return ResponseEntity.ok(equipamento);
     }
 
     @PostMapping("/calcular")
     public ResponseEntity<Map<String, Object>> calcular(@RequestBody Equipamento equipamentoDto) {
-        try{
+        try {
             Map<String, Object> result = equipamentoService.calcularMedidas(equipamentoDto);
             return ResponseEntity.ok(result);
         } catch (Exception e) {
@@ -65,6 +56,4 @@ public class EquipamentoController {
             return ResponseEntity.status(500).body(null);
         }
     }
-
 }
-

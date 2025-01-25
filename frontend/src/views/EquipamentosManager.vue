@@ -28,6 +28,8 @@
   
   <script>
   import axios from 'axios';
+
+  const apiBaseURL = 'https://calculo-pintura-superficie-production.up.railway.app';
   
   export default {
     data() {
@@ -41,7 +43,7 @@
     methods: {
       async carregarEquipamentos() {
         try {
-          const response = await axios.get('https://calculo-pintura-superficie-production.up.railway.app/equipamento/');
+          const response = await axios.get(`${apiBaseURL}/equipamento/`);
           this.equipamentos = response.data.map((equipamento) => ({
             ...equipamento,
             expandido: false, // Inicialmente os detalhes estão ocultos

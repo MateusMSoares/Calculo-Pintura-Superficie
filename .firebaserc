@@ -1,6 +1,7 @@
 {
   "projects": {
-    "ERP Calculo": "calculosuperfice"
+    "ERP Calculo": "calculosuperfice",
+    "default": "calculosuperfice"
   },
   "targets": {},
   "etags": {}
