@@ -7,9 +7,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import backend.dto.TipoDTO;
 import backend.entitys.Tipo;
 import backend.service.TipoService;
 
@@ -23,9 +25,9 @@ public class TipoController {
 
 
     @GetMapping("/")
-    public ResponseEntity<List<Tipo>> listarTipos() {
+    public ResponseEntity<List<TipoDTO>> listarTipos() {
         try {
-            List<Tipo> tipos = tipoService.carregarTipos();
+            List<TipoDTO> tipos = tipoService.carregarTipos();
             return ResponseEntity.ok(tipos);
         } catch (Exception e) {
             return ResponseEntity.status(404).body(null);
@@ -33,12 +35,21 @@ public class TipoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Tipo> procurarPorId(@PathVariable int id) {
+    public ResponseEntity<TipoDTO> procurarPorId(@PathVariable String id) {
         try {
-            Tipo tipo = tipoService.procurarPorId(id);
+            TipoDTO tipo = tipoService.procurarPorId(id);
             return ResponseEntity.ok(tipo);
         } catch (Exception e) {
             return ResponseEntity.status(404).body(null);
+        }
+    }
+
+    @PostMapping("/salvarEmLote")
+    public void salvarEmLote(List<Tipo> tipos) {
+        try {
+            tipoService.salvarEmLote(tipos);
+        } catch (Exception e) {
+            System.out.println("Erro ao salvar tipos em lote: " + e.getMessage());
         }
     }
 

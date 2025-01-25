@@ -1,6 +1,7 @@
 package backend.dto;
-import java.util.Map;
 
+import backend.entitys.Geometria;
+import backend.entitys.Tipo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,10 +13,10 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class EquipamentDto {
+public class EquipamentoDto {
+    private String id;
     private String nome;
-    private int tipoId;
-    private int geometriaId;
-    private Map<String, Object> propriedades_fundamentais;
+    private Tipo tipo;
+    private Geometria geometria;
     
 }

@@ -7,9 +7,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import backend.dto.GeometriaDTO;
 import backend.entitys.Geometria;
 import backend.service.GeometriaService;
 
@@ -22,9 +24,9 @@ public class GeometriaController {
     private GeometriaService geometriaService;
 
     @GetMapping("/")
-    public ResponseEntity<List<Geometria>> listarGeometrias() {
+    public ResponseEntity<List<GeometriaDTO>> listarGeometrias() {
         try {
-            List<Geometria> geometrias = geometriaService.carregarGeometrias();
+            List<GeometriaDTO> geometrias = geometriaService.carregarGeometrias();
             return ResponseEntity.ok(geometrias);
         } catch (Exception e) {
             e.printStackTrace();
@@ -33,13 +35,22 @@ public class GeometriaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Geometria> procurarPorId(@PathVariable int id) {
+    public ResponseEntity<GeometriaDTO> procurarPorId(@PathVariable String id) {
         System.out.println("Carregando geometria por id " + id);
         try {
-            Geometria geometria = geometriaService.procurarPorId(id);
+            GeometriaDTO geometria = geometriaService.procurarPorId(id);
             return ResponseEntity.ok(geometria);
         } catch (Exception e) {
             return ResponseEntity.status(404).body(null);
+        }
+    }
+
+    @PostMapping("/salvarEmLote")
+    public void salvarEmLote(List<Geometria> geometrias) {
+        try {
+            geometriaService.salvarEmLote(geometrias);
+        } catch (Exception e) {
+            System.out.println("Erro ao salvar geometrias em lote: " + e.getMessage());
         }
     }
 }
