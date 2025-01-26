@@ -42,8 +42,7 @@
 
 <script>
   import axios from 'axios';
-  const apiBaseUrl = 'https://calculo-pintura-superficie-production.up.railway.app';
-  const apiBaseUrlTeste = 'http://localhost:8080';
+  const apiBaseUrl = process.env.VUE_APP_API_BASE_URL;
 
   export default {
     data() {
@@ -88,7 +87,7 @@
         };
 
         try {
-          await axios.post(`${apiBaseUrlTeste}/equipamento/`, equipamentoParaEnviar);
+          await axios.post(`${apiBaseUrl}/equipamento/`, equipamentoParaEnviar);
           this.equipamentoCriado = true;
         } catch (error) {
           console.error('Erro ao criar equipamento:', error);

@@ -29,7 +29,7 @@
   <script>
   import axios from 'axios';
 
-  const apiBaseURL = 'https://calculo-pintura-superficie-production.up.railway.app';
+  const apiBaseURL = process.env.VUE_APP_API_BASE_URL;
   
   export default {
     data() {
