@@ -1,7 +1,8 @@
 package backend.config;
 
-import java.io.FileInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,10 +22,17 @@ public class FirebaseConfig {
         return getFirestore();
     }
 
-    public static void initializeFirebase() {
+   public static void initializeFirebase() {
         try {
-            // Caminho para o arquivo de credenciais
-            FileInputStream serviceAccount = new FileInputStream("frontend/src/config/calculosuperfice-firebase-adminsdk-pegyb-132ca3ac0c.json");
+            // Obtendo as credenciais do Firebase da variável de ambiente
+            String firebaseCredentials = System.getenv("FIREBASE_CREDENTIALS");
+
+            if (firebaseCredentials == null || firebaseCredentials.isEmpty()) {
+                throw new RuntimeException("As credenciais do Firebase não foram encontradas.");
+            }
+
+            // Convertendo a string JSON para InputStream
+            InputStream serviceAccount = new ByteArrayInputStream(firebaseCredentials.getBytes());
 
             // Inicializando o Firebase com as credenciais diretamente
             FirebaseOptions options = FirebaseOptions.builder()
@@ -40,6 +48,9 @@ public class FirebaseConfig {
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Erro ao inicializar o Firebase.");
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            System.err.println(e.getMessage());
         }
     }
 
@@ -47,4 +58,3 @@ public class FirebaseConfig {
         return FirestoreClient.getFirestore();
     }
 }
-
