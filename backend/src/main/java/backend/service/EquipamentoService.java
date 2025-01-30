@@ -88,9 +88,7 @@ public class EquipamentoService {
         equipamento.setTipo(newEquipamento.getTipo());
         equipamento.setGeometria(newEquipamento.getGeometria());
         
-              
-        // Cria um documento na coleção 'equipamentos' com um ID automático
-        DocumentReference docRef = db.collection("equipamentos").document();  // Ou pode usar .document(id) para definir um ID específico
+        DocumentReference docRef = db.collection("equipamentos").document();
         
         // Configura os dados que serão salvos no Firestore
         ApiFuture<WriteResult> future = docRef.set(equipamento, SetOptions.merge());  // merge() é usado para garantir que apenas os campos fornecidos sejam atualizados.
@@ -117,12 +115,12 @@ public class EquipamentoService {
         
         Geometria geometria = equipamento.getGeometria();
         Map<String, Object> propriedades = geometria.getPropriedades();
-        Map<String, String> formulas = geometria.getFormulas();
+        Map<String, Object> formulas = geometria.getFormulas();
         
         // Fase 1: Calcular as fórmulas e atribuir resultados diretamente às propriedades
-        for (Map.Entry<String, String> formulaEntry : formulas.entrySet()) {
+        for (Map.Entry<String, Object> formulaEntry : formulas.entrySet()) {
             String chave = formulaEntry.getKey();
-            String formula = formulaEntry.getValue();
+            String formula = (String) formulaEntry.getValue();
     
             formulasOriginais.put(chave, formula);
             

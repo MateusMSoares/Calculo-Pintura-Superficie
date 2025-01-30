@@ -3,6 +3,7 @@ package backend.service;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,8 @@ import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QuerySnapshot;
-import com.google.cloud.firestore.WriteBatch;
+import com.google.cloud.firestore.SetOptions;
+import com.google.cloud.firestore.WriteResult;
 
 import backend.dto.TipoDTO;
 import backend.entitys.Tipo;
@@ -75,29 +77,22 @@ public class TipoService {
         return tipo;
     }
 
-    public void salvarEmLote(List<Tipo> tipos) throws IOException {
-        // Inicia o batch de escrita
-        WriteBatch batch = db.batch();
-        
-        try {
-            for (Tipo tipo : tipos) {
-                // Crie uma referência para um novo documento com um ID gerado automaticamente
-                DocumentReference docRef = db.collection("tipos").document();  // Firestore gera automaticamente o ID
-                
-                // Adiciona a operação de "set" no batch
-                batch.set(docRef, tipo);
-                
-                // Imprime o ID do documento que será gerado
-                System.out.println("Tipo será salvo com ID: " + docRef.getId());
-            }
+        public Tipo criarTipo(Tipo newTipo) throws IOException {
+        Tipo tipo = newTipo;
+              
+        DocumentReference docRef = db.collection("tipos").document();
+        ApiFuture<WriteResult> future = docRef.set(tipo, SetOptions.merge()); 
 
-            // Commit para executar todas as operações de uma vez
-            batch.commit().get();  // .get() espera a operação ser concluída
-            System.out.println("Tipos salvos com sucesso!");
-        } catch (Exception e) {
-            System.err.println("Erro ao salvar tipos em lote: " + e.getMessage());
-            throw new IOException("Erro ao salvar tipos em lote", e);
-        }
+        future.addListener(() -> {
+            try {
+                WriteResult result = future.get();  // Espera a resposta do Firestore
+                System.out.println("Tipo criado com sucesso! Timestamp: " + result.getUpdateTime());
+            } catch (Exception e) {
+                System.err.println("Erro ao criar o tipo: " + e.getMessage());
+            }
+        }, Executors.newSingleThreadExecutor());  // Você precisa de um Executor para rodar o código assíncrono
+
+        return tipo;
     }
 
 

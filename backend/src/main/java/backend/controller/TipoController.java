@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -44,13 +45,16 @@ public class TipoController {
         }
     }
 
-    @PostMapping("/salvarEmLote")
-    public void salvarEmLote(List<Tipo> tipos) {
+    @PostMapping("/criar")
+    public void criarTipo(@RequestBody Tipo tipo) {
+
+        System.out.println(tipo);
         try {
-            tipoService.salvarEmLote(tipos);
+            tipoService.criarTipo(tipo);
         } catch (Exception e) {
             System.out.println("Erro ao salvar tipos em lote: " + e.getMessage());
         }
+    
     }
 
 }
