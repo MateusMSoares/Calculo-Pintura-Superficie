@@ -19,8 +19,8 @@ import com.google.cloud.firestore.SetOptions;
 import com.google.cloud.firestore.WriteResult;
 
 import backend.dto.EquipamentoDto;
+import backend.dto.GeometriaDTO;
 import backend.entitys.Equipamento;
-import backend.entitys.Geometria;
 import lombok.Getter;
 import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
@@ -106,14 +106,13 @@ public class EquipamentoService {
         return equipamento;
     }
     
-    
 
     public Map<String, Object> calcularMedidas(Equipamento equipamento) throws Exception {
         Map<String, Object> resultados = new HashMap<>();
         Map<String, Object> formulasOriginais = new HashMap<>();
         Map<String, Object> formulasComValores = new HashMap<>();
         
-        Geometria geometria = equipamento.getGeometria();
+        GeometriaDTO geometria = equipamento.getGeometria();
         Map<String, Object> propriedades = geometria.getPropriedades();
         Map<String, Object> formulas = geometria.getFormulas();
         
@@ -178,6 +177,5 @@ public class EquipamentoService {
         
         return resultado;
     }  
-
-
+    
 }

@@ -14,5 +14,5 @@ public class GeometriaDTO {
     private String nome;
     private List<String> propriedades_fundamentais;
     private Map<String, Object> propriedades;
-    private Map<String, String> formulas;
+    private Map<String, Object> formulas;
 }
