@@ -4,21 +4,24 @@
     "propriedades": {
         "diametro": 0.00,
         "altura": 0.00,
-        "altura_isolamento": 0.00,
         "area": 0.00,
         "resultado": "area - bv.resultado",
-        "volume": 0.00,
-        "volume_isolamento": 0.00,
-        "bv":{
+        "volume": 0.00
+    },
+    "bv":{
             "diametro": 0.00,
             "quantidade": 0.00,
             "resultado": 0.00
-        },
-        "formulas": {
-            "area": "diametro * 3.14 * altura",
-            "volume": "(3.14 * raio²) * altura",
-            "volume_isolamento": "propriedades.resultado * altura_isolamento",
-            "bv.resultado": "bv.diametro * bv.quantidade"
-        }
+    },
+    "isolamento":{
+        "altura": 0.00,
+        "volume": 0.00
+
+    },
+    "formulas": {
+        "propriedades.area": "propriedades.diametro * 3.14 * propriedades.altura",
+        "propriedades.volume": "(3.14 * (propriedades.diametro/2)) * altura",
+        "bv.resultado": "bv.diametro * bv.quantidade",
+        "isolamento.volume": "propriedades.resultado * isolamento.altura"
     }
 }
