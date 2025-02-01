@@ -23,7 +23,7 @@
       </select>
     </div>
 
-    <div v-if="equipamento.geometria.propriedades">
+    <div v-if="equipamento.geometria.propriedades_fundamentais">
       <div v-for="(valor, chave) in equipamento.geometria.propriedades" :key="chave" class="mb-3">
         <label :for="chave" class="form-label">{{ chave.charAt(0).toUpperCase() + chave.slice(1) }}</label>
         <input type="number" class="form-control" :id="chave" v-model="equipamento.geometria.propriedades[chave]" :required="true">
@@ -115,14 +115,9 @@
         }
       },
       carregarPropriedadesFundamentais() {
-        if (this.equipamento.geometria && this.equipamento.geometria.propriedades_fundamentais) {
-          this.equipamento.geometria.propriedades = this.equipamento.geometria.propriedades_fundamentais.reduce((acc, chave) => {
-            acc[chave] = 0; // Valor inicial das propriedades
-            return acc;
-          }, {});
-        } else {
-          this.equipamento.geometria.propriedades = {};
-        }
+        this.equipamento.geometria.propriedades_fundamentais.forEach(propriedade => {
+          console.log('Propriedade:', propriedade);
+        });
       }
     }
   };
