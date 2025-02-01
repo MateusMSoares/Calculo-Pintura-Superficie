@@ -42,8 +42,9 @@ public class EquipamentoController {
 
     @PostMapping("/")
     public ResponseEntity<Equipamento> adicionarEquipamento(@RequestBody Equipamento newEquipamento) throws IOException {
-        Equipamento equipamento = equipamentoService.criarEquipamento(newEquipamento);
-        return ResponseEntity.ok(equipamento);
+        System.out.println(newEquipamento);
+        //Equipamento equipamento = equipamentoService.criarEquipamento(newEquipamento);
+        return ResponseEntity.ok(null);
     }
 
     @PostMapping("/calcular")
