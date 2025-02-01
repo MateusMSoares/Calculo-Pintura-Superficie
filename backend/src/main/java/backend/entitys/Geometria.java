@@ -3,6 +3,7 @@ package backend.entitys;
 import java.util.List;
 import java.util.Map;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,6 @@ public class Geometria {
     private String nome;
     private List<String> propriedades_fundamentais;
     private Map<String, Object> propriedades;
-    private Map<String, String> formulas;
+    private Map<String, Object> formulas;
 
 }

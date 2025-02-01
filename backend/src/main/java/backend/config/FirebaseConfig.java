@@ -1,6 +1,7 @@
 package backend.config;
 
 import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -22,29 +23,33 @@ public class FirebaseConfig {
         return getFirestore();
     }
 
-   public static void initializeFirebase() {
+    public static void initializeFirebase() {
         try {
-            // Obtendo as credenciais do Firebase da variável de ambiente
+            // Tenta obter as credenciais do Firebase da variável de ambiente (para produção, por exemplo)
             String firebaseCredentials = System.getenv("FIREBASE_CREDENTIALS");
-
-            if (firebaseCredentials == null || firebaseCredentials.isEmpty()) {
-                throw new RuntimeException("As credenciais do Firebase não foram encontradas.");
+    
+            InputStream serviceAccount;
+    
+            if (firebaseCredentials != null && !firebaseCredentials.isEmpty()) {
+                // Caso as credenciais estejam na variável de ambiente
+                serviceAccount = new ByteArrayInputStream(firebaseCredentials.getBytes());
+            } else {
+                // Caso contrário, tenta carregar as credenciais de um arquivo local (para ambiente local)
+                String filePath = "frontend/src/config/calculosuperfice-firebase-adminsdk-pegyb-132ca3ac0c.json";
+                serviceAccount = new FileInputStream(filePath);
             }
-
-            // Convertendo a string JSON para InputStream
-            InputStream serviceAccount = new ByteArrayInputStream(firebaseCredentials.getBytes());
-
-            // Inicializando o Firebase com as credenciais diretamente
+    
+            // Inicializando o Firebase com as credenciais
             FirebaseOptions options = FirebaseOptions.builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                 .build();
-
-            // Inicializa o FirebaseApp com as opções de configuração
+    
+            // Inicializa o FirebaseApp com as opções de configuração, caso ainda não tenha sido inicializado
             if (FirebaseApp.getApps().isEmpty()) {
                 FirebaseApp.initializeApp(options);
                 System.out.println("Firebase Initialized");
             }
-
+    
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Erro ao inicializar o Firebase.");
@@ -53,6 +58,7 @@ public class FirebaseConfig {
             System.err.println(e.getMessage());
         }
     }
+    
 
     public static Firestore getFirestore() {
         return FirestoreClient.getFirestore();

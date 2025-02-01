@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -45,10 +46,11 @@ public class GeometriaController {
         }
     }
 
-    @PostMapping("/salvarEmLote")
-    public void salvarEmLote(List<Geometria> geometrias) {
+    @PostMapping("/criar")
+    public void criar(@RequestBody Geometria geometria) {
+        System.out.println(geometria);
         try {
-            geometriaService.salvarEmLote(geometrias);
+            geometriaService.criar(geometria);
         } catch (Exception e) {
             System.out.println("Erro ao salvar geometrias em lote: " + e.getMessage());
         }

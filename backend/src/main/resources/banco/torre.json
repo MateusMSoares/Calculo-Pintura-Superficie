@@ -1,0 +1,24 @@
+{
+    "nome": "Torre",
+    "propriedades_fundamentais": ["diametro", "altura"],
+    "propriedades": {
+        "diametro": 0.00,
+        "altura": 0.00,
+        "altura_isolamento": 0.00,
+        "area": 0.00,
+        "resultado": "area - bv.resultado",
+        "volume": 0.00,
+        "volume_isolamento": 0.00,
+        "bv":{
+            "diametro": 0.00,
+            "quantidade": 0.00,
+            "resultado": 0.00
+        },
+        "formulas": {
+            "area": "diametro * 3.14 * altura",
+            "volume": "(3.14 * raio²) * altura",
+            "volume_isolamento": "propriedades.resultado * altura_isolamento",
+            "bv.resultado": "bv.diametro * bv.quantidade"
+        }
+    }
+}

@@ -11,12 +11,15 @@
         >
           <h5>{{ equipamento.nome }}</h5>
           <p><strong>Tipo:</strong> {{ equipamento.tipo.nome }}</p>
-          <p><strong>Geometria:</strong> {{ equipamento.geometria.nome }}</p>
+          <p><strong>Geometria:</strong> {{ equipamento.geometria.nome}}</p>
   
           <div v-if="equipamento.expandido">
             <p><strong>Propriedades:</strong></p>
             <ul>
-              <li v-for="(valor, chave) in equipamento.propriedades" :key="chave">
+              <li v-for="(valor, chave) in equipamento.geometria.propriedades" :key="chave">
+                <strong>{{ chave }}:</strong> {{ valor }}
+              </li>
+              <li v-for="(valor, chave) in equipamento.tipo.propriedades" :key="chave">
                 <strong>{{ chave }}:</strong> {{ valor }}
               </li>
             </ul>
@@ -30,6 +33,7 @@
   import axios from 'axios';
 
   const apiBaseURL = process.env.VUE_APP_API_BASE_URL;
+  console.log("teste: ", apiBaseURL);
   
   export default {
     data() {
@@ -46,8 +50,9 @@
           const response = await axios.get(`${apiBaseURL}/equipamento/`);
           this.equipamentos = response.data.map((equipamento) => ({
             ...equipamento,
-            expandido: false, // Inicialmente os detalhes estão ocultos
+            expandido: false,
           }));
+          console.log("TESTANDO: ", this.equipamentos);
         } catch (error) {
           console.error('Erro ao carregar equipamentos:', error);
         }

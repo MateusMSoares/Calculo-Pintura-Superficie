@@ -1,0 +1,32 @@
+{
+    "nome": "Tanque",
+    "data_cadastro": "2021-09-01",
+    "data_ultima_atualizacao": "2021-09-01",
+    "hist_alt": 1,
+    "propriedades_fundamentais": ["diametro", "altura"],
+    "propriedades": {
+        "diametro": 0.00,
+        "altura": 0.00,
+        "altura_isolamento": 0.00,
+        "area": 0.00,
+        "resultado": "area - bv.resultado - (if)pl.resultado",
+        "volume": 0.00,
+        "volume_isolamento": 0.00,
+        "bv":{
+            "diametro": 0.00,
+            "quantidade": 0.00,
+            "resultado": 0.00
+        },
+        "pl": {
+            "raio": 0.00,
+            "lado": 0.00,
+            "resultado": "(lado * 3) * raio"
+        },
+        "formulas": {
+            "area": "diametro * 3.14 * altura",
+            "volume": "(3.14 * raio²) * altura",
+            "volume_isolamento": "propriedades.resultado * altura_isolamento",
+            "bv.resultado": "bv.diametro * bv.quantidade"
+        }
+    }
+}
