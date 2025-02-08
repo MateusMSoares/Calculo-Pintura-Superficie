@@ -20,6 +20,8 @@ import com.google.cloud.firestore.WriteResult;
 
 import backend.dto.EquipamentoDto;
 import backend.entitys.Equipamento;
+import backend.entitys.Tanque;
+import backend.entitys.Torre;
 import lombok.Getter;
 
 
@@ -47,8 +49,9 @@ public class EquipamentoService {
                 
                 // Itera sobre cada documento na coleção
                 for (QueryDocumentSnapshot document : snapshot) {
-                    // Converte o documento para um objeto Equipamento
-                    Equipamento equipamento = document.toObject(Equipamento.class);
+                    String tipo = document.getString("tipo");
+
+                    Equipamento equipamento = document.toObject(criarPorTipo(tipo).getClass());
                     
                     // Adiciona o objeto Equipamento à lista
                     equipamentos.add(equipamento);
@@ -58,6 +61,16 @@ public class EquipamentoService {
             }
             
             return equipamentos;
+    }
+
+    public Equipamento criarPorTipo(String tipo){
+        if (tipo.equals("TORRE")) {
+            return new Torre();
+        } else if (tipo.equals("TANQUE")) {
+            return new Tanque();
+        } else {
+            return null;  
+        }
     }
 
 
