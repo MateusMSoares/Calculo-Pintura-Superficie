@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -21,9 +20,9 @@ public class EquipamentoController {
     EquipamentoService equipamentoService;
 
     @GetMapping("/")
-    public ResponseEntity<List<EquipamentoDto>> listarEquipamentos() {
+    public ResponseEntity<List<Equipamento>> listarEquipamentos() {
         try {
-            List<EquipamentoDto> equipamentos = equipamentoService.listarEquipamentos();
+           List<Equipamento> equipamentos = equipamentoService.listarEquipamentos();
             return ResponseEntity.ok(equipamentos);
         } catch (Exception e) {
             return ResponseEntity.status(404).body(null);
@@ -33,28 +32,20 @@ public class EquipamentoController {
     @GetMapping("/{id}")
     public ResponseEntity<EquipamentoDto> procurarPorId(@PathVariable String id) {
         try {
-            EquipamentoDto equipamento = equipamentoService.procurarPorId(id);
-            return ResponseEntity.ok(equipamento);
+            //EquipamentoDto equipamento = equipamentoService.procurarPorId(id);
+            return ResponseEntity.ok(null);
         } catch (Exception e) {
             return ResponseEntity.status(404).body(null);
         }
     }
 
     @PostMapping("/")
-    public ResponseEntity<Equipamento> adicionarEquipamento(@RequestBody Equipamento newEquipamento) throws IOException {
-        System.out.println(newEquipamento);
-        //Equipamento equipamento = equipamentoService.criarEquipamento(newEquipamento);
-        return ResponseEntity.ok(null);
-    }
+    public ResponseEntity<Equipamento> adicionarEquipamento(@RequestBody EquipamentoDto newEquipamento) throws IOException {
 
-    @PostMapping("/calcular")
-    public ResponseEntity<Map<String, Object>> calcular(@RequestBody Equipamento equipamentoDto) {
-        try {
-            Map<String, Object> result = equipamentoService.calcularMedidas(equipamentoDto);
-            return ResponseEntity.ok(result);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(500).body(null);
-        }
+        Equipamento equipamento = Equipamento.fromTipo(newEquipamento.getTipo(), newEquipamento);
+
+        System.out.println(equipamento);
+        Equipamento equipamentoCriado = equipamentoService.criarEquipamento(equipamento);
+        return ResponseEntity.ok(equipamentoCriado);
     }
 }

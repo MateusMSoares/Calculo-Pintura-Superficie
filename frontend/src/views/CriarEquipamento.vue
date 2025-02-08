@@ -1,124 +1,272 @@
 <template>
-  <div class="container mt-5">
-    <h1>Criar Equipamento</h1>
-
-    <div class="mb-3">
-      <label for="nome" class="form-label">Nome</label>
-      <input type="text" class="form-control" id="nome" v-model="equipamento.nome" required>
-    </div>
-
-    <div class="mb-3">
-      <label for="tipo" class="form-label">Tipo</label>
-      <select class="form-select" id="tipo" v-model="equipamento.tipo">
-        <option value="" disabled selected>Selecione um tipo</option>
-        <option v-for="tipo in tipos" :key="tipo.id" :value="tipo">{{ tipo.nome }}</option>
-      </select>
-    </div>
-
-    <div class="mb-3">
-      <label for="geometria" class="form-label">Geometria</label>
-      <select class="form-select" id="geometria" v-model="equipamento.geometria" @change="carregarPropriedadesFundamentais">
-        <option value="" disabled selected>Selecione uma geometria</option>
-        <option v-for="geometria in geometrias" :key="geometria.id" :value="geometria">{{ geometria.nome }}</option>
-      </select>
-    </div>
-
-    <div v-if="equipamento.geometria.propriedades_fundamentais">
-      <div v-for="(valor, chave) in equipamento.geometria.propriedades" :key="chave" class="mb-3">
-        <label :for="chave" class="form-label">{{ chave.charAt(0).toUpperCase() + chave.slice(1) }}</label>
-        <input type="number" class="form-control" :id="chave" v-model="equipamento.geometria.propriedades[chave]" :required="true">
+  <div class="cadastro-equipamento">
+    <h2>Cadastro de Equipamento</h2>
+    
+    <form @submit.prevent="cadastrarEquipamento">
+      <!-- Nome -->
+      <div class="form-group">
+        <label for="nome">Nome do Equipamento</label>
+        <input
+          type="text"
+          id="nome"
+          v-model="equipamento.nome"
+          required
+        />
       </div>
-    </div>
 
-    <button class="btn btn-success mt-3" @click="criarEquipamento" :disabled="isFormInvalid">Criar Equipamento</button>
+      <!-- Tipo -->
+      <div class="form-group">
+        <label for="tipo">Tipo do Equipamento</label>
+        <select
+          id="tipo"
+          v-model="equipamento.tipo"
+          required
+        >
+        <option value="Selecione um tipo" disabled selected>Selecione um tipo</option>
+          <option v-for="tipo in tipos" :key="tipo" :value="tipo">
+            {{ tipo }}
+          </option>
+        </select>
+      </div>
 
-    <div v-if="equipamentoCriado" class="mt-4">
-      <h3>Equipamento Criado:</h3>
-      <pre>{{ equipamentoExibido }}</pre>
+
+
+      <!-- Diametro -->
+      <div class="form-group">
+        <label for="diametro">Diâmetro</label>
+        <input
+          type="number"
+          id="diametro"
+          v-model="equipamento.diametro"
+          required
+        />
+      </div>
+
+      <!-- Altura -->
+      <div class="form-group">
+        <label for="altura">Altura</label>
+        <input
+          type="number"
+          id="altura"
+          v-model="equipamento.altura"
+          required
+        />
+      </div>
+
+      <!-- BV -->
+      <div class="form-group">
+        <label for="hasBV">Possui BV?</label>
+        <input
+          type="checkbox"
+          id="hasBV"
+          v-model="equipamento.hasBV"
+        />
+      </div>
+
+      <!-- Campos BV -->
+      <div v-if="equipamento.hasBV">
+        <div class="form-group">
+          <label for="bvDiametro">Diâmetro (BV)</label>
+          <input
+            type="number"
+            id="bvDiametro"
+            v-model="equipamento.bv.diametro"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="bvQuantidade">Quantidade (BV)</label>
+          <input
+            type="number"
+            id="bvQuantidade"
+            v-model="equipamento.bv.quantidade"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- PL -->
+      <div class="form-group">
+        <label for="hasPL">Possui PL?</label>
+        <input
+          type="checkbox"
+          id="hasPL"
+          v-model="equipamento.hasPL"
+        />
+      </div>
+
+      <!-- Campos PL -->
+      <div v-if="equipamento.hasPL">
+        <div class="form-group">
+          <label for="plRaio">Raio (PL)</label>
+          <input
+            type="number"
+            id="plRaio"
+            v-model="equipamento.pl.raio"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="plLado">Lado (PL)</label>
+          <input
+            type="number"
+            id="plLado"
+            v-model="equipamento.pl.lado"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- Isolamento -->
+      <div class="form-group">
+        <label for="hasIsolamento">Possui Isolamento?</label>
+        <input
+          type="checkbox"
+          id="hasIsolamento"
+          v-model="equipamento.hasIsolamento"
+        />
+      </div>
+
+      <!-- Campos Isolamento -->
+      <div v-if="equipamento.hasIsolamento">
+        <div class="form-group">
+          <label for="isolamentoAltura">Altura (Isolamento)</label>
+          <input
+            type="number"
+            id="isolamentoAltura"
+            v-model="equipamento.isolamento.altura"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- Submeter -->
+      <div class="form-group">
+        <button type="submit">Cadastrar Equipamento</button>
+      </div>
+    </form>
+
+    <!-- Exibição de status -->
+    <div v-if="statusMessage" :class="statusClass">
+      {{ statusMessage }}
     </div>
   </div>
 </template>
 
+
 <script>
-  import axios from 'axios';
-  const apiBaseUrl = process.env.VUE_APP_API_BASE_URL;
+import axios from "axios";
+const apiBaseUrl = process.env.VUE_APP_API_BASE_URL;
 
-  export default {
-    data() {
-      return {
-        equipamento: {
-          nome: '',
-          tipo: {
-            nome: '',
-            propriedades: []
-          },
-          geometria: {
-            id: '',
-            nome: '',
-            propriedades_fundamentais: [],
-            propriedades: {}
-          }
-        },
-        tipos: [],
-        geometrias: [],
-        equipamentoCriado: false
-      };
-    },
-    computed: {
-      equipamentoExibido() {
-        const tipoSelecionado = this.equipamento.tipo ? this.equipamento.tipo.nome : 'Não selecionado';
-        const geometriaSelecionada = this.equipamento.geometria ? this.equipamento.geometria.nome : 'Não selecionado';
-
-        return {
-          nome: this.equipamento.nome,
-          tipo: tipoSelecionado,
-          geometria: geometriaSelecionada
-        };
+export default {
+  data() {
+    return {
+      equipamento: {
+        nome: "",
+        diametro: null,
+        altura: null,
+        hasBV: false,
+        hasPL: false,
+        hasIsolamento: false,
+        bv: { diametro: null, quantidade: null, resultado: null },
+        pl: { raio: null, lado: null, resultado: null },
+        isolamento: { altura: null, resultado: null },
       },
-      isFormInvalid() {
-        return !this.equipamento.nome || !this.equipamento.tipo.id || !this.equipamento.geometria.id;
+      equipamentoCriado: {
+      },
+      tipos: [],
+      statusMessage: "",
+      statusClass: "",
+    };
+  },
+  mounted() {
+    this.getTipos();
+  },
+  methods: {
+    async cadastrarEquipamento() {
+      if (!this.equipamento.hasBV) {
+        this.equipamento.bv = null;
+      }
+      
+      if (!this.equipamento.hasPL) {
+        this.equipamento.pl = null;
+      }
+      
+      if (!this.equipamento.hasIsolamento) {
+        this.equipamento.isolamento = null;
+      }
+
+      console.log("equipamento:", JSON.stringify(this.equipamento, null, 2));
+      try {
+        await axios.post(
+          `${apiBaseUrl}/equipamento/`,
+          this.equipamento
+        );
+        console.log("equipamento: " + this.equipamento); 
+        // Exibe uma mensagem de sucesso
+        this.statusMessage = "Equipamento cadastrado com sucesso!";
+        this.statusClass = "success";
+      } catch (error) {
+        // Exibe uma mensagem de erro
+        this.statusMessage = "Erro ao cadastrar o equipamento.";
+        this.statusClass = "error";
       }
     },
-    mounted() {
-      this.carregarTipos();
-      this.carregarGeometrias();
-    },
-    methods: {
-      async criarEquipamento() {
-        const equipamentoParaEnviar = {
-          nome: this.equipamento.nome,
-          tipo: JSON.parse(JSON.stringify(this.equipamento.tipo)), 
-          geometria: JSON.parse(JSON.stringify(this.equipamento.geometria)) 
-        };
-        console.log('Equipamento para enviar:', equipamentoParaEnviar);
-        try {
-          await axios.post(`${apiBaseUrl}/equipamento/`, equipamentoParaEnviar);
-          this.equipamentoCriado = true;
-        } catch (error) {
-          console.error('Erro ao criar equipamento:', error);
-        }
-      },
-      async carregarTipos() {
-        try {
-          const response = await axios.get(`${apiBaseUrl}/tipo/`);
-          this.tipos = response.data;
-        } catch (error) {
-          console.error('Erro ao carregar tipos:', error);
-        }
-      },
-      async carregarGeometrias() {
-        try {
-          const response = await axios.get(`${apiBaseUrl}/geometria/`);
-          this.geometrias = response.data;
-        } catch (error) {
-          console.error('Erro ao carregar geometrias:', error);
-        }
-      },
-      carregarPropriedadesFundamentais() {
-        this.equipamento.geometria.propriedades_fundamentais.forEach(propriedade => {
-          console.log('Propriedade:', propriedade);
-        });
+    async getTipos() {
+      try {
+        const response = await axios.get(`${apiBaseUrl}/tipo/`);
+        this.tipos = response.data;
+        console.log("tipos:", this.tipos);
+      } catch (error) {
+        console.error(error);
       }
-    }
-  };
+    },
+  },
+};
 </script>
+
+<style scoped>
+.cadastro-equipamento {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 1rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  font-size: 1rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+.success {
+  color: green;
+}
+
+.error {
+  color: red;
+}
+</style>
