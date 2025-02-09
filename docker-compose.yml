@@ -7,12 +7,9 @@ services:
       dockerfile: Dockerfile.backend
     ports:
       - "8080:8080"
-    environment:
-      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE}  # Exemplo de variável para o backend
     networks:
       - app-network
-    env_file:
-      - .env.local  # Você pode usar .env.local ou .env.production aqui
+
 
   frontend:
     build:
