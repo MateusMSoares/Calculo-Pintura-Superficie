@@ -12,29 +12,50 @@
       >
         <h5>{{ equipamento.nome }}</h5>
         <p><strong>Tipo:</strong> {{ equipamento.tipo }}</p>
+        <p><strong>Data de Criação:</strong> {{ formatDate(equipamento.dataHoraCriacao) }}</p>
         <p><strong>Diâmetro:</strong> {{ equipamento.diametro }}</p>
         <p><strong>Altura:</strong> {{ equipamento.altura }}</p>
         <p><strong>Área:</strong> {{ equipamento.area }}</p>
         <p><strong>Resultado:</strong> {{ equipamento.resultado }}</p>        
-        <p><strong>Quantidade:</strong> {{ equipamento.quantidade }}</p>
         <p><strong>Volume:</strong> {{ equipamento.volume }}</p>
-
-        <!-- Exibir detalhes do BV se 'hasBV' for verdadeiro -->
-        <div v-if="equipamento.hasBV">
-          <p><strong>Diâmetro (BV):</strong> {{ equipamento.bv.diametro }}</p>
-          <p><strong>Quantidade (BV):</strong> {{ equipamento.bv.quantidade }}</p>
-          <p><strong>Resultado (BV):</strong> {{ equipamento.bv.resultado }}</p>
-        </div>
 
         <!-- Exibir detalhes adicionais quando expandido -->
         <div v-if="equipamento.expandido">
-          <p><strong>Propriedades:</strong></p>
           <ul>
-            <p><strong>Data de Criação:</strong> {{ formatDate(equipamento.dataHoraCriacao.value) }}</p>
-            <p><strong>Has BV:</strong> {{ equipamento.hasBV }}</p>
-            <p><strong>Has Isolamento:</strong> {{ equipamento.hasIsolamento }}</p>
-            <p><strong>Has PL:</strong> {{ equipamento.hasPL }}</p>
-            <p><strong>Volume:</strong> {{ equipamento.volume }}</p>
+              <div v-if="equipamento.hasBV">
+            <p><strong>BV:</strong></p>
+            <ul>
+              <li><strong>Diâmetro (BV):</strong> {{ equipamento.bv.diametro }}</li>
+              <li><strong>Quantidade (BV):</strong> {{ equipamento.bv.quantidade }}</li>
+              <li><strong>Resultado (BV):</strong> {{ equipamento.bv.resultado }}</li>
+            </ul>
+          </div>
+          <div v-else>
+            <p><strong>BV:</strong> N/A</p>
+          </div>
+
+          <!-- Exibir Detalhes de PL -->
+          <div v-if="equipamento.hasPL">
+            <p><strong>PL:</strong></p>
+            <ul>
+              <li><strong>Valor:</strong> {{ equipamento.pl.valor }}</li>
+              <li><strong>Descrição:</strong> {{ equipamento.pl.descricao }}</li>
+            </ul>
+          </div>
+          <div v-else>
+            <p><strong>PL:</strong> N/A</p>
+          </div>
+
+          <!-- Exibir Detalhes de Isolamento -->
+          <div v-if="equipamento.hasIsolamento">
+            <p><strong>Isolamento:</strong></p>
+            <ul>
+              <li><strong>Detalhes:</strong> {{ equipamento.isolamento }}</li>
+            </ul>
+          </div>
+          <div v-else>
+            <p><strong>Isolamento:</strong> N/A</p>
+          </div>
           </ul>
         </div>
       </div>

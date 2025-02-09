@@ -1,5 +1,6 @@
 # Etapa de build
 FROM openjdk:21-jdk-slim AS build
+FROM node:16 AS build-frontend
 
 # Copia o código-fonte para o container
 COPY . /app/
