@@ -18,11 +18,11 @@ services:
     ports:
       - "80:80"
     environment:
-      - VUE_APP_NODE_ENV=${NODE_ENV}  # Variável para o Vue CLI
-      - VUE_APP_API_BASE_URL=${VUE_APP_API_BASE_URL}  # Passando a URL da API para o Vue 3
+      - VUE_APP_NODE_ENV=${NODE_ENV}
+      - VUE_APP_API_BASE_URL=${VUE_APP_API_BASE_URL}
     depends_on:
       - backend
     networks:
       - app-network
     env_file:
-      - .env.local  # Você pode usar .env.local ou .env.production aqui também
+      - .env.local
