@@ -25,10 +25,8 @@ public class Equipamento {
     private Update historico;
 
     public static Equipamento fromTipo(Tipos tipo, EquipamentoDto newEquipamento) {
-        if (tipo == Tipos.TORRE) {
+        if (tipo == Tipos.TORRE || tipo == Tipos.TANQUE) {
             return new Cilindro(newEquipamento);
-        } else if (tipo == Tipos.TANQUE) {
-            return new Tanque();
         }
         return null;
     }

@@ -71,7 +71,8 @@ const apiBaseURL = process.env.VUE_APP_API_BASE_URL;
 export default {
   data() {
     return {
-      equipamentos: [], // Lista de equipamentos
+      equipamentos: [],
+      
     };
   },
   mounted() {

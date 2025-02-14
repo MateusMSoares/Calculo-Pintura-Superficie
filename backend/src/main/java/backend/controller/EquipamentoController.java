@@ -42,10 +42,17 @@ public class EquipamentoController {
     @PostMapping("/")
     public ResponseEntity<Equipamento> adicionarEquipamento(@RequestBody EquipamentoDto newEquipamento) throws IOException {
 
+        System.out.println(newEquipamento);
         Equipamento equipamento = Equipamento.fromTipo(newEquipamento.getTipo(), newEquipamento);
 
         System.out.println(equipamento);
         Equipamento equipamentoCriado = equipamentoService.criarEquipamento(equipamento);
         return ResponseEntity.ok(equipamentoCriado);
+    }
+
+    @GetMapping("/calcular")
+    public ResponseEntity<Equipamento> calcularDimensoes(@RequestBody EquipamentoDto equipamentoDto) {
+        Equipamento equipamento = Equipamento.fromTipo(equipamentoDto.getTipo(), equipamentoDto);
+        return ResponseEntity.ok(equipamento);
     }
 }
