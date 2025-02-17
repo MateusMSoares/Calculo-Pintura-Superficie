@@ -10,10 +10,10 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString(callSuper = true)
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class Cilindro extends Equipamento {
+public class Cilindro implements EquipamentoDetails{
     @NonNull
     private Double diametro;
     @NonNull
@@ -29,9 +29,6 @@ public class Cilindro extends Equipamento {
     private boolean hasIsolamento;
 
     public Cilindro(EquipamentoDto equipamento) {
-        super.setNome(equipamento.getNome());
-        super.setTipo(equipamento.getTipo());
-        super.setDataHoraCriacao(System.currentTimeMillis());
         this.diametro = equipamento.getDiametro();
         this.altura = equipamento.getAltura();
         this.hasBV = equipamento.isHasBV();
@@ -50,6 +47,7 @@ public class Cilindro extends Equipamento {
         this.calcularIsolamento();
     }
 
+    @Override
     public void calcularResultado() {
         System.out.println("Calculando resultado do cilindro");
         this.area = formatarResultado(diametro * Math.PI * altura);
@@ -71,6 +69,7 @@ public class Cilindro extends Equipamento {
         }
     }
     
+    @Override
     public void calcularIsolamento() {
        if (this.isolamento != null) {
            isolamento.calcularResultado(area);

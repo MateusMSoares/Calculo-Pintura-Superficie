@@ -42,8 +42,10 @@ public class EquipamentoController {
     @PostMapping("/")
     public ResponseEntity<Equipamento> adicionarEquipamento(@RequestBody EquipamentoDto newEquipamento) throws IOException {
 
+        Equipamento equipamento = new Equipamento();
         System.out.println(newEquipamento);
-        Equipamento equipamento = Equipamento.fromTipo(newEquipamento.getTipo(), newEquipamento);
+
+        equipamento.CreatefromTipo(newEquipamento.getTipo(), newEquipamento);
 
         System.out.println(equipamento);
         Equipamento equipamentoCriado = equipamentoService.criarEquipamento(equipamento);
@@ -52,7 +54,8 @@ public class EquipamentoController {
 
     @GetMapping("/calcular")
     public ResponseEntity<Equipamento> calcularDimensoes(@RequestBody EquipamentoDto equipamentoDto) {
-        Equipamento equipamento = Equipamento.fromTipo(equipamentoDto.getTipo(), equipamentoDto);
+        Equipamento equipamento = new Equipamento();
+        equipamento.fromTipo(equipamentoDto.getTipo(), equipamentoDto);
         return ResponseEntity.ok(equipamento);
     }
 }

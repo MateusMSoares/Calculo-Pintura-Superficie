@@ -23,12 +23,19 @@ public class Equipamento {
     private Tipos Tipo;
     private Long dataHoraCriacao;
     private Update historico;
+    private EquipamentoDetails details;
 
-    public static Equipamento fromTipo(Tipos tipo, EquipamentoDto newEquipamento) {
+    public void fromTipo(Tipos tipo, EquipamentoDto newEquipamento) {
         if (tipo == Tipos.TORRE || tipo == Tipos.TANQUE) {
-            return new Cilindro(newEquipamento);
+            details = new Cilindro(newEquipamento);
         }
-        return null;
+    }
+
+    public void CreatefromTipo(Tipos tipo, EquipamentoDto newEquipamento) {
+        if (tipo == Tipos.TORRE || tipo == Tipos.TANQUE) {
+            this.details = new Cilindro(newEquipamento);
+            this.dataHoraCriacao = System.currentTimeMillis();
+        }
     }
     
 }

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="form-group">
     <label for="diametro">Diâmetro</label>
     <input
       type="number"
@@ -36,3 +36,19 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.form-group {
+  margin-bottom: 1rem;
+}
+
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  font-size: 1rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+</style>

@@ -38,39 +38,7 @@ public class EquipamentoService {
     }
 
     public List<Equipamento> listarEquipamentos() {
-        List<Equipamento> equipamentos = new ArrayList<>();
-            
-            // Obtém a referência para a coleção "equipamentos"
-            CollectionReference equipamentosRef = db.collection("equipamentos");
-            
-            try {
-                // Obtém todos os documentos da coleção
-                QuerySnapshot snapshot = equipamentosRef.get().get();
-                
-                // Itera sobre cada documento na coleção
-                for (QueryDocumentSnapshot document : snapshot) {
-                    String tipo = document.getString("tipo");
-
-                    Equipamento equipamento = document.toObject(criarPorTipo(tipo).getClass());
-                    
-                    // Adiciona o objeto Equipamento à lista
-                    equipamentos.add(equipamento);
-                }
-            } catch (Exception e) {
-                System.err.println("Erro ao listar equipamentos: " + e.getMessage());
-            }
-            
-            return equipamentos;
-    }
-
-    public Equipamento criarPorTipo(String tipo){
-        if (tipo.equals("TORRE")) {
-            return new Torre();
-        } else if (tipo.equals("TANQUE")) {
-            return new Tanque();
-        } else {
-            return null;  
-        }
+        return null;
     }
 
 

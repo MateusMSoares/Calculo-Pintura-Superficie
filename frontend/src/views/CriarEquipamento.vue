@@ -3,14 +3,124 @@
     <h2>Cadastro de Equipamento</h2>
 
     <form @submit.prevent="cadastrarEquipamento">
-      <!-- Outros campos aqui -->
+      <div class="form-group">
+        <label for="nome">Nome do Equipamento</label>
+        <input
+          type="text"
+          id="nome"
+          v-model="equipamento.nome"
+          required
+        />
+      </div>
+
+      <!-- Tipo -->
+      <div class="form-group">
+        <label for="tipo">Tipo do Equipamento</label>
+        <select
+          id="tipo"
+          v-model="equipamento.tipo"
+          required
+        >
+        <option value="Selecione um tipo" disabled selected>Selecione um tipo</option>
+          <option v-for="tipo in tipos" :key="tipo" :value="tipo">
+            {{ tipo }}
+          </option>
+        </select>
+      </div>
       
       <!-- Componente de Geometria Dinâmico -->
       <component
         :is="getGeometryComponent"
         :equipamento="equipamento"
-        @updateEquipamento="handleUpdateEquipamento"  <!-- Aqui escutamos o evento -->
+        @updateEquipamento="handleUpdateEquipamento"
       ></component>
+
+      <!-- BV -->
+      <div class="form-group">
+        <label for="hasBV">Possui BV?</label>
+        <input
+          type="checkbox"
+          id="hasBV"
+          v-model="equipamento.hasBV"
+        />
+      </div>
+
+      <!-- Campos BV -->
+      <div v-if="equipamento.hasBV">
+        <div class="form-group">
+          <label for="bvDiametro">Diâmetro (BV)</label>
+          <input
+            type="number"
+            id="bvDiametro"
+            v-model="equipamento.bv.diametro"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="bvQuantidade">Quantidade (BV)</label>
+          <input
+            type="number"
+            id="bvQuantidade"
+            v-model="equipamento.bv.quantidade"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- PL -->
+      <div class="form-group">
+        <label for="hasPL">Possui PL?</label>
+        <input
+          type="checkbox"
+          id="hasPL"
+          v-model="equipamento.hasPL"
+        />
+      </div>
+
+      <!-- Campos PL -->
+      <div v-if="equipamento.hasPL">
+        <div class="form-group">
+          <label for="plRaio">Raio (PL)</label>
+          <input
+            type="number"
+            id="plRaio"
+            v-model="equipamento.pl.raio"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="plLado">Lado (PL)</label>
+          <input
+            type="number"
+            id="plLado"
+            v-model="equipamento.pl.lado"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- Isolamento -->
+      <div class="form-group">
+        <label for="hasIsolamento">Possui Isolamento?</label>
+        <input
+          type="checkbox"
+          id="hasIsolamento"
+          v-model="equipamento.hasIsolamento"
+        />
+      </div>
+
+      <!-- Campos Isolamento -->
+      <div v-if="equipamento.hasIsolamento">
+        <div class="form-group">
+          <label for="isolamentoAltura">Altura (Isolamento)</label>
+          <input
+            type="number"
+            id="isolamentoAltura"
+            v-model="equipamento.isolamento.altura"
+            required
+          />
+        </div>
+      </div>
 
       <!-- Submeter -->
       <div class="form-group">
