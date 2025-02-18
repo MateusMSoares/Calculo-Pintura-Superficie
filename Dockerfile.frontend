@@ -1,0 +1,23 @@
+# Etapa de construção do frontend
+FROM node:16 AS build-frontend
+
+# Define o diretório de trabalho
+WORKDIR /app/frontend
+
+# Copia o código-fonte do frontend
+COPY frontend/ .
+
+# Instala as dependências e constrói o projeto
+RUN npm install && npm run build
+
+# A etapa de produção do frontend
+FROM nginx:alpine AS prod-frontend
+
+# Copia os arquivos compilados da etapa anterior
+COPY --from=build-frontend /app/frontend/build /usr/share/nginx/html
+
+# Exponha a porta 80 para o nginx
+EXPOSE 80
+
+# Comando para rodar o nginx
+CMD ["nginx", "-g", "daemon off;"]

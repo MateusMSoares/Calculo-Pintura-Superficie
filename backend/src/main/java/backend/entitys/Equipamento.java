@@ -1,7 +1,9 @@
 package backend.entitys;
 
-import java.util.Map;
+import com.google.cloud.firestore.annotation.DocumentId;
+import com.google.cloud.firestore.annotation.PropertyName;
 
+import backend.dto.EquipamentoDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,9 +16,26 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Equipamento {
+    @DocumentId
+    private String id;
     private String nome;
-    private Tipo tipo;
-    private Geometria geometria;
-    private Map<String, Object> propriedades;
+    @PropertyName("tipo")
+    private Tipos Tipo;
+    private Long dataHoraCriacao;
+    private Update historico;
+    private EquipamentoDetails details;
+
+    public void fromTipo(Tipos tipo, EquipamentoDto newEquipamento) {
+        if (tipo == Tipos.TORRE || tipo == Tipos.TANQUE) {
+            details = new Cilindro(newEquipamento);
+        }
+    }
+
+    public void CreatefromTipo(Tipos tipo, EquipamentoDto newEquipamento) {
+        if (tipo == Tipos.TORRE || tipo == Tipos.TANQUE) {
+            this.details = new Cilindro(newEquipamento);
+            this.dataHoraCriacao = System.currentTimeMillis();
+        }
+    }
     
 }
