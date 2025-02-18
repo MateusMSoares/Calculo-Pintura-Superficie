@@ -49,7 +49,10 @@ public class Cilindro implements EquipamentoDetails{
 
     @Override
     public void calcularResultado() {
-        System.out.println("Calculando resultado do cilindro");
+       if (this.altura <= 0 || this.diametro <=0) {
+            this.resultado = null;
+            return;
+       }
         this.area = formatarResultado(diametro * Math.PI * altura);
         this.volume = formatarResultado(Math.PI * Math.pow(diametro / 2, 2) * altura);
     

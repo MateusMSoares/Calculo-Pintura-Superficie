@@ -16,8 +16,12 @@ public class Isolamento {
     private Double resultado;
 
 
-    public void calcularResultado(Double area) {
-        resultado = area * this.altura;
+    public void calcularResultado(Double altura) {
+        if (this.altura == null) {
+            this.resultado = null;
+            return;
+        }
+        resultado = altura * this.altura;
         String valorFormatado = String.format("%.2f", resultado);
     
         valorFormatado = valorFormatado.replace(',', '.');

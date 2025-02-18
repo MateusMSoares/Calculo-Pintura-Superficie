@@ -18,6 +18,10 @@ public class PL {
     private Double resultado;
 
     public void calcularResultado() {
+        if (this.raio == null || this.lado == null) {
+            this.resultado = null;
+            return;
+        }
         resultado = lado * 3 * raio;
         String valorFormatado = String.format("%.2f", resultado);
     
