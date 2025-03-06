@@ -1,6 +1,7 @@
 package backend.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 
@@ -10,7 +11,9 @@ import org.springframework.stereotype.Service;
 
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.QuerySnapshot;
 import com.google.cloud.firestore.SetOptions;
 import com.google.cloud.firestore.WriteResult;
 
@@ -32,7 +35,25 @@ public class EquipamentoService {
     }
 
     public List<Equipamento> listarEquipamentos() {
-        return null;
+        List<Equipamento> equipamentos = new ArrayList<>();
+        
+        ApiFuture<QuerySnapshot> query = db.collection("equipamentos").get();
+        try {
+            // Esperar pela consulta e obter os documentos
+            QuerySnapshot querySnapshot = query.get();
+            
+            for (DocumentSnapshot document : querySnapshot.getDocuments()) {
+                Equipamento equipamento = document.toObject(Equipamento.class);
+                if (equipamento != null) {
+                    equipamento.setId(document.getId());
+                    equipamentos.add(equipamento);
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Erro ao listar equipamentos: " + e.getMessage());
+        }
+        
+        return equipamentos;
     }
 
 

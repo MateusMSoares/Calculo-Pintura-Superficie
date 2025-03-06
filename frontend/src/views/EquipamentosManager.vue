@@ -2,70 +2,12 @@
   <div class="container mt-5">
     <h1>Equipamentos</h1>
 
-    <!-- Lista de Equipamentos -->
-    <div class="list-group">
-      <div
-        v-for="equipamento in equipamentos"
-        :key="equipamento.id"
-        class="list-group-item"
-        @click="toggleDetalhes(equipamento.id)"
-      >
-        <h5>{{ equipamento.nome }}</h5>
-        <p><strong>Tipo:</strong> {{ equipamento.tipo }}</p>
-        <p><strong>Data de Criação:</strong> {{ formatDate(equipamento.dataHoraCriacao) }}</p>
-        <p><strong>Diâmetro:</strong> {{ equipamento.diametro }}</p>
-        <p><strong>Altura:</strong> {{ equipamento.altura }}</p>
-        <p><strong>Área:</strong> {{ equipamento.area }}</p>
-        <p><strong>Resultado:</strong> {{ equipamento.resultado }}</p>        
-        <p><strong>Volume:</strong> {{ equipamento.volume }}</p>
-
-        <!-- Exibir detalhes adicionais quando expandido -->
-        <div v-if="equipamento.expandido">
-          <ul>
-              <div v-if="equipamento.hasBV">
-            <p><strong>BV:</strong></p>
-            <ul>
-              <li><strong>Diâmetro (BV):</strong> {{ equipamento.bv.diametro }}</li>
-              <li><strong>Quantidade (BV):</strong> {{ equipamento.bv.quantidade }}</li>
-              <li><strong>Resultado (BV):</strong> {{ equipamento.bv.resultado }}</li>
-            </ul>
-          </div>
-          <div v-else>
-            <p><strong>BV:</strong> N/A</p>
-          </div>
-
-          <!-- Exibir Detalhes de PL -->
-          <div v-if="equipamento.hasPL">
-            <p><strong>PL:</strong></p>
-            <ul>
-              <li><strong>Valor:</strong> {{ equipamento.pl.valor }}</li>
-              <li><strong>Descrição:</strong> {{ equipamento.pl.descricao }}</li>
-            </ul>
-          </div>
-          <div v-else>
-            <p><strong>PL:</strong> N/A</p>
-          </div>
-
-          <!-- Exibir Detalhes de Isolamento -->
-          <div v-if="equipamento.hasIsolamento">
-            <p><strong>Isolamento:</strong></p>
-            <ul>
-              <li><strong>Detalhes:</strong> {{ equipamento.isolamento }}</li>
-            </ul>
-          </div>
-          <div v-else>
-            <p><strong>Isolamento:</strong> N/A</p>
-          </div>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
+   </div>
 </template>
 
 <script>
 import axios from "axios";
-
+import CylinderGeometry from "@/components/geometries/CilindroTemplate.vue";
 const apiBaseURL = process.env.VUE_APP_API_BASE_URL;
 
 export default {
