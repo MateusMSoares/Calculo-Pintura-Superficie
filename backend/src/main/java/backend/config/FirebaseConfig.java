@@ -35,7 +35,7 @@ public class FirebaseConfig {
                 serviceAccount = new ByteArrayInputStream(firebaseCredentials.getBytes());
             } else {
                 // Caso contrário, tenta carregar as credenciais de um arquivo local (para ambiente local)
-                String filePath = "frontend/src/config/calculosuperfice-firebase-adminsdk-pegyb-132ca3ac0c.json";
+                String filePath = "backend/src/main/resources/calculosuperfice-firebase-adminsdk-pegyb-132ca3ac0c.json";
                 serviceAccount = new FileInputStream(filePath);
             }
     

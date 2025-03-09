@@ -1,10 +1,8 @@
-version: '3.8'
-
 services:
   backend:
     build:
       context: .
-      dockerfile: Dockerfile.backend
+      dockerfile: dockerfile.backend
     ports:
       - "8080:8080"
     networks:
@@ -14,15 +12,20 @@ services:
   frontend:
     build:
       context: .
-      dockerfile: Dockerfile.frontend
+      dockerfile: dockerfile.frontend
     ports:
-      - "80:80"
-    environment:
-      - VUE_APP_NODE_ENV=${NODE_ENV}
-      - VUE_APP_API_BASE_URL=${VUE_APP_API_BASE_URL}
+      - "8081:80"
     depends_on:
       - backend
     networks:
       - app-network
+    volumes:
+      - ./frontend:/app/frontend 
+      - /app/frontend/node_modules
     env_file:
-      - .env.local
+      - frontend/.env.local
+
+
+networks:
+  app-network:
+    driver: bridge
