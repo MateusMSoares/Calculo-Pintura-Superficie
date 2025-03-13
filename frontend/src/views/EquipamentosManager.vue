@@ -7,7 +7,7 @@
 
 <script>
 import axios from "axios";
-import CylinderGeometry from "@/components/geometries/CilindroTemplate.vue";
+//import CylinderGeometry from "@/components/geometries/CilindroTemplate.vue";
 const apiBaseURL = process.env.VUE_APP_API_BASE_URL;
 
 export default {
